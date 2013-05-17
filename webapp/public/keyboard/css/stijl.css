@@ -1,0 +1,178 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #c8d1d0; 
+  background-image: url(alum.jpg);
+}
+#night {
+  background-color: #3b3e3f; 
+  background-image: url(alum-night.jpg);
+}
+#main {
+  width: 1231px;
+  margin: 0 auto;
+  position: relative;
+}
+#keyboard {
+  width: 860px;
+  height: 540px;
+  padding: 75px 0 0 16px;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-position: 0 -220px;
+  list-style-type: none;
+  z-index: 5;
+  position: relative;
+}
+#keyboard-real {
+  background-image: url('real.jpg');
+  position: absolute;
+  top: -215px;
+  left: -62px;
+  z-index: 1;
+  height: 830px;
+  width: 1350px;
+}
+#thabottom {
+  background-image: url('real.jpg');
+  background-position: 0 -341px;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  height: 542px;
+  width: 1350px;
+}
+@font-face {
+  font-family: keyboard;
+  src: url('keyboard.otf') format('opentype');
+}
+ol li {
+    width: 25px;
+    height: 50px;
+    border-radius: 8px;
+    line-height: 45px;
+    float: left;
+    position: relative;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    font-family: keyboard, "Arial Rounded", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 12px;
+    padding-bottom: 0;
+    padding-left: 12px;
+  /*background-color: rgba(255,0,0,.5);
+  opacity: .5;*/
+}
+#night li {
+  box-shadow: 0 2px 4px rgba(255,255,255,.7);
+  text-shadow: 0 0 5px rgba(255,255,255,.5);
+}
+ol li span {
+    display: block;
+    height: 14px;
+    line-height: 30px;
+}
+ol .special {
+    height: 34px;
+    padding-top: 16px;
+    font-size: 11px;
+}
+ol .special span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 2px;
+    padding: 0 12px;
+    height: auto;
+    line-height: 40px;
+    font-size: 11px;
+}
+ol .tall {
+  height: 62px;
+}
+ol .tall span {
+}
+ol .special.tall {
+    height: 30px;
+    padding-top: 28px;
+}
+ol .special.tall span {
+}
+ol .less-padding {
+    padding: 0 8px;
+    width: 35px;
+}
+ol .less-padding span {
+  padding: 0 8px;
+}
+.r {
+  text-align: right;
+}
+.l {
+  text-align: left;
+}
+#delete {
+    width: 80px;
+}
+#tab {
+    width: 80px;
+}
+#caps-lock {
+    width: 90px;
+}
+#enter {
+    width: 72px;
+}
+.shift {
+    width: 109px;
+}
+.shift.r {
+    width: 109px;
+}
+.command {
+    width: 45px;
+}
+ol .command span {
+  font-size: 20px;
+  line-height: 44px;
+}
+#space {
+    width: 250px;
+}
+.arrow {
+    height: 27px;
+    line-height: 26px;
+    font-size: 20px;
+    margin-top: 0;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    margin-left: 5px;
+}
+.up {
+    border-radius: 8px 8px 0 0;
+    margin-top: 0;
+    margin-right: 66px;
+    margin-bottom: 3px;
+    margin-left: 64px;
+}
+.down {
+  border-radius: 0 0 8px 8px;
+}
+
+#keyboard li:hover {
+        position: relative;
+        top: 1px;
+        left: 1px;
+        border-color: #e5e5e5;
+        cursor: pointer;
+}
