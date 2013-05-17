@@ -112,8 +112,28 @@
 			cc.remove();
 			someChar.css('background-color','#000000');
 		});
-	}
+	};
+	function runConsole() {
+        // 发送到服务端，如果保存成功,则继续，否则alert错误信息
+        var param = new Object();
+        // 发送ajax请求jsonp
+        var url = '/load';
+        $.ajax({
+            type : 'POST',
+            url : url,
+            data : param,
+            dataType : "json",
+            success : runConsoleDone
+        });
+    };
+    function runConsoleDone(data) {
+    	console.log(data);
+        if (data.success == false) {
+        } else {
+        }
+    };
 	display('up');
 	display(',');
 	display('d');
+	runConsole();
 </script>
