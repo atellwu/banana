@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.naming.directory.SearchResult;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class AppController {
@@ -23,6 +25,26 @@ public class AppController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("homeActive", true);
         return new ModelAndView("index", map);
+    }
+
+    @RequestMapping(value = "/load", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public Object load() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            
+            
+            map.put("result", "abc");
+            
+            
+            map.put("success", true);
+        } catch (Exception e) {
+            map.put("success", false);
+            LOG.error(e.getMessage(), e);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(map);
+
     }
 
     @RequestMapping(value = "/list")
