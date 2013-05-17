@@ -1,0 +1,113 @@
+<style>
+#hots span{
+   padding:30px;
+}
+</style>
+<div id="content" class="page center">
+   <div class="simple-form">
+      <div class="hero-unit">
+         <div style="margin-bottom: 60px;" class="page-header">
+            <h1 style="margin-left: 80px;">点评智库</h1>
+            <p style="margin-right: 80px;" class="pull-right">————
+               打造点评一流的知识搜索平台！</p>
+         </div>
+         <div class="row-fluid">
+            <div class="span1"></div>
+            <form action="${rc.contextPath}/list" class="span10 navbar-form">
+               <input type="text" name="keyword" class="input-xxlarge">
+               <button type="submit" class="btn">搜索</button>
+               <a href="#advanced" class="advanced-search">高级</a>
+            </form>
+            <div class="span1"></div>
+         </div>
+      </div>
+   </div>
+   <div class="advanced-form hide">
+      <div class="hero-unit">
+         <div style="margin-bottom: 60px;" class="page-header">
+            <h1 style="margin-left: 80px;">点评智库</h1>
+            <p style="margin-right: 80px;" class="pull-right">————
+               打造点评一流的知识搜索平台！</p>
+         </div>
+         <div class="row-fluid">
+            <form class="form-horizontal" method="post">
+               <fieldset>
+                  <legend>高级搜索</legend>
+                  <div class="control-group">
+                     <label class="control-label" for="title">标题:</label>
+                     <div class="controls">
+                        <input type="text" class="input-xlarge"
+                           id="title" name="title" />
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="source">来源:</label>
+                     <div class="controls">
+                        <input type="text" class="input-xlarge"
+                           id="source" name="source" />
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="author">作者:</label>
+                     <div class="controls">
+                        <input type="text" class="input-xlarge"
+                           id="author" name="author">
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="content">内容:</label>
+                     <div class="controls">
+                        <input type="text" class="input-xlarge"
+                           name="content">
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="keyword">关键字:</label>
+                     <div class="controls">
+                        <input type="text" class="input-xlarge"
+                           id="keyword" name="keyword">
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label" for="datetime">时间:</label>
+                     <div class="controls">
+                        <input type="text" class="input-xlarge"
+                           id="datetime" name="datetime">
+                     </div>
+                  </div>
+                  <div class="form-actions">
+                     <button type="submit" class="btn btn-primary">查询</button>
+                     <button type="button" class="btn advance-cancel">取消</button>
+                  </div>
+               </fieldset>
+            </form>
+         </div>
+      </div>
+   </div>
+   <div class="row-fluid works-show">
+      <div class="span4">
+         <h2>Wiki</h2>
+         <p>THIS WIKI IS LICENSED UNDER A CREATIVE COMMONS 2.0 LICENSE
+            XWIKI ENTERPRISE 4.1.3 - DOCUMENTATION</p>
+         <p>
+            <a class="btn" href="http://wiki.dianpingoa.com/bin/view/Main/">View details >></a>
+         </p>
+      </div>
+      <div class="span4">
+         <h2>Bugzilla</h2>
+         <p>File a new bug<br/>Edit this search<br>Start a new search</p>
+         <p>
+            <a class="btn" href="http://dbug.dianpingoa.com/">View details >></a>
+         </p>
+      </div>
+      <div class="span4">
+         <h2>EZ Company</h2>
+         <p>Powered by Redmine © 2006-2011 Jean-Philippe Lang</p>
+         <p>
+            <a class="btn" href="http://project.dianpingoa.com/">View details >></a>
+         </p>
+      </div>
+   </div>
+</div>
+<script type="text/javascript"
+   src="${rc.contextPath}/public/js/index.js"></script>
