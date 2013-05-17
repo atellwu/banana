@@ -1,113 +1,119 @@
-<style>
-#hots span{
-   padding:30px;
-}
-</style>
-<div id="content" class="page center">
-   <div class="simple-form">
-      <div class="hero-unit">
-         <div style="margin-bottom: 60px;" class="page-header">
-            <h1 style="margin-left: 80px;">点评智库</h1>
-            <p style="margin-right: 80px;" class="pull-right">————
-               打造点评一流的知识搜索平台！</p>
-         </div>
-         <div class="row-fluid">
-            <div class="span1"></div>
-            <form action="${rc.contextPath}/list" class="span10 navbar-form">
-               <input type="text" name="keyword" class="input-xxlarge">
-               <button type="submit" class="btn">搜索</button>
-               <a href="#advanced" class="advanced-search">高级</a>
-            </form>
-            <div class="span1"></div>
-         </div>
-      </div>
-   </div>
-   <div class="advanced-form hide">
-      <div class="hero-unit">
-         <div style="margin-bottom: 60px;" class="page-header">
-            <h1 style="margin-left: 80px;">点评智库</h1>
-            <p style="margin-right: 80px;" class="pull-right">————
-               打造点评一流的知识搜索平台！</p>
-         </div>
-         <div class="row-fluid">
-            <form class="form-horizontal" method="post">
-               <fieldset>
-                  <legend>高级搜索</legend>
-                  <div class="control-group">
-                     <label class="control-label" for="title">标题:</label>
-                     <div class="controls">
-                        <input type="text" class="input-xlarge"
-                           id="title" name="title" />
-                     </div>
-                  </div>
-                  <div class="control-group">
-                     <label class="control-label" for="source">来源:</label>
-                     <div class="controls">
-                        <input type="text" class="input-xlarge"
-                           id="source" name="source" />
-                     </div>
-                  </div>
-                  <div class="control-group">
-                     <label class="control-label" for="author">作者:</label>
-                     <div class="controls">
-                        <input type="text" class="input-xlarge"
-                           id="author" name="author">
-                     </div>
-                  </div>
-                  <div class="control-group">
-                     <label class="control-label" for="content">内容:</label>
-                     <div class="controls">
-                        <input type="text" class="input-xlarge"
-                           name="content">
-                     </div>
-                  </div>
-                  <div class="control-group">
-                     <label class="control-label" for="keyword">关键字:</label>
-                     <div class="controls">
-                        <input type="text" class="input-xlarge"
-                           id="keyword" name="keyword">
-                     </div>
-                  </div>
-                  <div class="control-group">
-                     <label class="control-label" for="datetime">时间:</label>
-                     <div class="controls">
-                        <input type="text" class="input-xlarge"
-                           id="datetime" name="datetime">
-                     </div>
-                  </div>
-                  <div class="form-actions">
-                     <button type="submit" class="btn btn-primary">查询</button>
-                     <button type="button" class="btn advance-cancel">取消</button>
-                  </div>
-               </fieldset>
-            </form>
-         </div>
-      </div>
-   </div>
-   <div class="row-fluid works-show">
-      <div class="span4">
-         <h2>Wiki</h2>
-         <p>THIS WIKI IS LICENSED UNDER A CREATIVE COMMONS 2.0 LICENSE
-            XWIKI ENTERPRISE 4.1.3 - DOCUMENTATION</p>
-         <p>
-            <a class="btn" href="http://wiki.dianpingoa.com/bin/view/Main/">View details >></a>
-         </p>
-      </div>
-      <div class="span4">
-         <h2>Bugzilla</h2>
-         <p>File a new bug<br/>Edit this search<br>Start a new search</p>
-         <p>
-            <a class="btn" href="http://dbug.dianpingoa.com/">View details >></a>
-         </p>
-      </div>
-      <div class="span4">
-         <h2>EZ Company</h2>
-         <p>Powered by Redmine © 2006-2011 Jean-Philippe Lang</p>
-         <p>
-            <a class="btn" href="http://project.dianpingoa.com/">View details >></a>
-         </p>
-      </div>
+<div class="container " style="border-radius: 3px 3px 3px 3px; height: 100px; width: 800px; margin-top: 20px;">
+   <div class="row" style="width: 600px; margin: 0 auto;">
+      <div class="span2">abc</div>
+      <div class="span2">可以改为</div>
+      <div class="span2">dsa</div>
    </div>
 </div>
-<script type="text/javascript"
-   src="${rc.contextPath}/public/js/index.js"></script>
+
+<script>
+	var a = $('#a');
+	var b = $('#b');
+	a.animate({
+		opacity : 1,
+	}, 2000, function() {
+	});
+</script>
+<div id="main" role="main" style="width: 950px; margin: 0 auto;">
+   <ol id="keyboard" class="macbook-pro">
+      <li><span>~</span>`</li>
+      <li><span>!</span>1</li>
+      <li><span>@</span>2</li>
+      <li><span>#</span>3</li>
+      <li><span>$</span>4</li>
+      <li><span>%</span>5</li>
+      <li><span>^</span>6</li>
+      <li><span>&amp;</span>7</li>
+      <li><span>*</span>8</li>
+      <li><span>(</span>9</li>
+      <li><span>)</span>0</li>
+      <li><span>_</span>-</li>
+      <li><span>+</span>=</li>
+      <li class="special r" id="delete">delete</li>
+      <li class="special l" id="tab">tab</li>
+      <li>Q</li>
+      <li>W</li>
+      <li>E</li>
+      <li>R</li>
+      <li>T</li>
+      <li>Y</li>
+      <li>U</li>
+      <li>I</li>
+      <li>O</li>
+      <li>P</li>
+      <li><span>{</span>[</li>
+      <li><span>}</span>]</li>
+      <li><span>|</span>\</li>
+      <li class="special l" id="caps-lock">caps lock</li>
+      <li id="charA">A</li>
+      <li>S</li>
+      <li>D</li>
+      <li>F</li>
+      <li>G</li>
+      <li>H</li>
+      <li>J</li>
+      <li>K</li>
+      <li>L</li>
+      <li><span>:</span>;</li>
+      <li><span>"</span>'</li>
+      <li class="special r" id="enter"><span>enter</span>return</li>
+      <li class="special shift l">shift</li>
+      <li>Z</li>
+      <li>X</li>
+      <li>C</li>
+      <li>V</li>
+      <li>B</li>
+      <li>N</li>
+      <li>M</li>
+      <li><span>&lt;</span>,</li>
+      <li><span>&gt;</span>.</li>
+      <li><span>?</span>/</li>
+      <li class="special shift r">shift</li>
+      <li class="special tall l">fn</li>
+      <li class="special tall less-padding l">control</li>
+      <li class="special tall less-padding l"><span>alt</span>option</li>
+      <li class="special tall command r"><span style="display:none">command left</span><span>&#8984;</span>command</li>
+      <li class="special tall" id="space"></li>
+      <li class="special tall command l"><span style="display:none">command right</span><span>&#8984;</span>command</li>
+      <li class="special tall less-padding r"><span>alt</span>option</li>
+      <li class="arrow up"><span style="display:none">up</span>&#8593;</li>
+      <li class="arrow"><span style="display:none">left</span>&#8592;</li>
+      <li class="arrow down"><span style="display:none">down</span>&#8595;</li>
+      <li class="arrow"><span style="display:none">right</span>&#8594;</li>
+   </ol>
+</div>
+<script>
+	function display(ch) {
+		if(ch.length==1){
+			ch = ch.toUpperCase();
+		}
+		console.log($("li:contains('" + ch + "')").text());
+		var someChar = $("li:contains('" + ch + "')");
+		someChar.css('background-color','#848484');
+		var topp = someChar.offset().top - 7;
+		var left = someChar.offset().left + 22;
+		var topp2 = topp -30;
+		var left2 = left - 20;
+		var cc = $("<div class='cc' style='z-index: 9999; position: absolute; font-size: 100%; opacity: 0'></div>");
+		if(ch == 'command right' || ch == 'command left' ){
+            ch = 'command';
+        }
+		cc.text(ch);
+		cc.css('top', topp);
+		cc.css('left', left);
+		cc.css('opacity', 1);
+		cc.appendTo($('body'));
+		cc.animate({
+			opacity : 0,
+			left : left2,
+			top : topp2,
+			fontSize : '500%'
+		}, 1000, function() {
+			cc.remove();
+			someChar.css('background-color','#000000');
+		});
+	}
+	display('up');
+	display(',');
+	display('d');
+</script>
