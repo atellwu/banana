@@ -10,6 +10,15 @@ public class Hotkey implements Serializable {
 	private Set<String> tokens;
 	private String name;
 	private String videoUrl;
+	private double usage;
+
+	public double getUsage() {
+		return usage;
+	}
+
+	public void setUsage(double usage) {
+		this.usage = usage;
+	}
 
 	public Set<String> getTokens() {
 		return tokens;
