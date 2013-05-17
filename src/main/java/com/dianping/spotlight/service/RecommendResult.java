@@ -6,7 +6,7 @@ import java.util.List;
 public class RecommendResult implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private List<HotKeyRes> recommendKeys;
+	private List<HotkeyRes> recommendKeys;
 	private int score;
 	private double higherThan;
 	private String appName;
@@ -19,11 +19,11 @@ public class RecommendResult implements Serializable {
 		this.appName = appName;
 	}
 
-	public List<HotKeyRes> getRecommendKeys() {
+	public List<HotkeyRes> getRecommendKeys() {
 		return recommendKeys;
 	}
 
-	public void setRecommendKeys(List<HotKeyRes> recommendKeys) {
+	public void setRecommendKeys(List<HotkeyRes> recommendKeys) {
 		this.recommendKeys = recommendKeys;
 	}
 
