@@ -6,7 +6,7 @@ public class HotKeyRes implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Hotkey hotKey;
-	private double usage;
+	
 	private boolean used;
 
 	public Hotkey getHotKey() {
@@ -17,13 +17,6 @@ public class HotKeyRes implements Serializable {
 		this.hotKey = hotKey;
 	}
 
-	public double getUsage() {
-		return usage;
-	}
-
-	public void setUsage(double usage) {
-		this.usage = usage;
-	}
 
 	public boolean isUsed() {
 		return used;
