@@ -17,14 +17,16 @@ package com.dianping.spotlight.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 
@@ -38,17 +40,24 @@ import com.thoughtworks.xstream.XStream;
  */
 public class DefaultStore implements Store {
     private static final String               DEFAULT_APPHOTKEYSCONFIG_PATH = "/data/appdatas/banana/apphotkeys.xml";
+    private static final String               DEFAULT_STATS_FOLDER          = "/data/appdatas/banana";
 
     private String                            appHotkeyConfigPath           = DEFAULT_APPHOTKEYSCONFIG_PATH;
+    private String                            statsOutputFolder             = DEFAULT_STATS_FOLDER;
     private Map<String, Leaderboard>          appLeaderboards               = new HashMap<String, Leaderboard>();
     private Map<String, Set<Hotkey>>          appHotkeys                    = new HashMap<String, Set<Hotkey>>();
     private Map<String, Map<Hotkey, Integer>> appHotkeyStats                = new HashMap<String, Map<Hotkey, Integer>>();
     private Map<String, Integer>              appStats                      = new HashMap<String, Integer>();
     private Map<String, Map<Double, Integer>> appHotkeyUsageStats           = new HashMap<String, Map<Double, Integer>>();
-    private XStream                           xstream                       = new XStream();
+    private final XStream                     xstream                       = new XStream();
+    private ScheduledExecutorService          scheduledExecutorService;
 
     public void setAppHotkeyConfigPath(String appHotkeyConfigPath) {
         this.appHotkeyConfigPath = appHotkeyConfigPath;
+    }
+
+    public void setStatsOutputFolder(String statsOutputFolder) {
+        this.statsOutputFolder = statsOutputFolder;
     }
 
     /*
@@ -68,6 +77,108 @@ public class DefaultStore implements Store {
         xstream.alias("list", List.class);
         xstream.alias("scorestat", ScoreStat.class);
         loadAppHotkeys();
+        loadAndSchedulePersistStatsFiles();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadAndSchedulePersistStatsFiles() {
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
+
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread t = new Thread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        });
+        try {
+            final File appLeaderboardsFile = new File(statsOutputFolder, "appLeaderboards.xml");
+            if (appLeaderboardsFile.exists()) {
+                Map<String, Leaderboard> newAppLeaderboards = (Map<String, Leaderboard>) xstream
+                        .fromXML(new FileInputStream(appLeaderboardsFile));
+                appLeaderboards = newAppLeaderboards;
+            }
+
+            scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        if (appLeaderboards != null && appLeaderboards.size() > 0) {
+                            FileUtils.writeStringToFile(appLeaderboardsFile, xstream.toXML(appLeaderboards));
+                        }
+                    } catch (Throwable e) {
+                        // ignore
+                    }
+                }
+            }, 5, 5, TimeUnit.SECONDS);
+
+            final File appHotkeyStatsFile = new File(statsOutputFolder, "appHotkeyStats.xml");
+            if (appHotkeyStatsFile.exists()) {
+                Map<String, Map<Hotkey, Integer>> newAppHotkeyStats = (Map<String, Map<Hotkey, Integer>>) xstream
+                        .fromXML(new FileInputStream(appHotkeyStatsFile));
+                appHotkeyStats = newAppHotkeyStats;
+            }
+
+            scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        if (appHotkeyStats != null && appHotkeyStats.size() > 0) {
+                            FileUtils.writeStringToFile(appHotkeyStatsFile, xstream.toXML(appHotkeyStats));
+                        }
+                    } catch (Throwable e) {
+                        // ignore
+                    }
+                }
+            }, 5, 5, TimeUnit.SECONDS);
+
+            final File appStatsFile = new File(statsOutputFolder, "appStats.xml");
+            if (appStatsFile.exists()) {
+                Map<String, Integer> newAppStats = (Map<String, Integer>) xstream.fromXML(new FileInputStream(
+                        appStatsFile));
+                appStats = newAppStats;
+            }
+
+            scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        if (appStats != null && appStats.size() > 0) {
+                            FileUtils.writeStringToFile(appStatsFile, xstream.toXML(appStats));
+                        }
+                    } catch (Throwable e) {
+                        // ignore
+                    }
+                }
+            }, 5, 5, TimeUnit.SECONDS);
+
+            final File appHotkeyUsageStatsFile = new File(statsOutputFolder, "appHotkeyUsageStats.xml");
+            if (appHotkeyUsageStatsFile.exists()) {
+                Map<String, Map<Double, Integer>> newAppHotkeyUsageStats = (Map<String, Map<Double, Integer>>) xstream
+                        .fromXML(new FileInputStream(appHotkeyUsageStatsFile));
+                appHotkeyUsageStats = newAppHotkeyUsageStats;
+            }
+
+            scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        if (appHotkeyUsageStats != null && appHotkeyUsageStats.size() > 0) {
+                            FileUtils.writeStringToFile(appHotkeyUsageStatsFile, xstream.toXML(appHotkeyUsageStats));
+                        }
+                    } catch (Throwable e) {
+                        // ignore
+                    }
+                }
+            }, 5, 5, TimeUnit.SECONDS);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -79,7 +190,7 @@ public class DefaultStore implements Store {
             try {
                 Map<String, Set<Hotkey>> newAppHotkeys = (Map<String, Set<Hotkey>>) xstream
                         .fromXML(new FileInputStream(appHotkeyConfigPath));
-                appHotkeys.putAll(newAppHotkeys);
+                appHotkeys = newAppHotkeys;
             } catch (Exception e) {
                 throw new RuntimeException(String.format("Load %s fail", appHotkeyConfigPath), e);
             }
@@ -98,7 +209,10 @@ public class DefaultStore implements Store {
         }
         Set<Hotkey> res = new HashSet<Hotkey>();
 
-        int appStatCount = appStats.get(app);
+        Integer appStatCount = appStats.get(app);
+        if (appStatCount == null) {
+            appStatCount = 0;
+        }
 
         for (Hotkey hotkey : appHotkeys.get(app)) {
             Integer hotkeyUsage = getAppHotkeyStats(app).get(hotkey);
@@ -119,7 +233,7 @@ public class DefaultStore implements Store {
      */
     @Override
     public synchronized void record(String appName, Set<Hotkey> hotkeys) {
-        if (!appHotkeys.containsKey(appName)) {
+        if (!appHotkeys.containsKey(appName) || hotkeys == null) {
             return;
         }
         Map<Hotkey, Integer> hotkeyStats = getAppHotkeyStats(appName);
@@ -256,15 +370,45 @@ public class DefaultStore implements Store {
         Map<String, Set<Hotkey>> appHotkeys = new HashMap<String, Set<Hotkey>>();
         Set<Hotkey> hotkeys = new HashSet<Hotkey>();
         appHotkeys.put("eclipse", hotkeys);
-        Set<String> tokens = new HashSet<String>();
 
+        // ////////////////////////////////////////////
+        // add hotkey to generate file
         // copy
-        tokens.clear();
-        tokens.add("l_control");
-        tokens.add("c");
-        Hotkey h1 = new Hotkey(tokens, "Copy", "", 0d);
+        Set<String> t1 = new HashSet<String>();
+        t1.add("l_control");
+        t1.add("c");
+        Hotkey h1 = new Hotkey(t1, "Copy", "", 0d);
         hotkeys.add(h1);
 
+        // pase
+        Set<String> t2 = new HashSet<String>();
+        t2.add("l_control");
+        t2.add("v");
+        Hotkey h2 = new Hotkey(t2, "Paste", "", 0d);
+        hotkeys.add(h2);
+        // end add hotkey to generate file
+        // ////////////////////////////////////////////
+
         FileUtils.writeStringToFile(new File(DEFAULT_APPHOTKEYSCONFIG_PATH), xstream.toXML(appHotkeys));
+
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // DefaultStore store = new DefaultStore();
+        // store.init();
+        // Set<Hotkey> uses = new HashSet<Hotkey>();
+        // Set<String> utoken = new HashSet<String>();
+        // utoken.add("l_control");
+        // utoken.add("c");
+        // Hotkey uh1 = new Hotkey(utoken, "", "", 0);
+        // uses.add(uh1);
+        // store.record("eclipse", uses);
+        // store.saveUsage("eclipse", 0.1);
+        // store.saveScore("eclipse", 100);
+        //
+        // System.out.println(xstream.toXML(store.listHotkeys("eclipse")));
+        // System.out.println(xstream.toXML(store.getLeaderboard("eclipse")));
+        // System.out.println(xstream.toXML(store.getUsages("eclipse")));
+        //
+        // System.in.read();
+        // System.exit(0);
     }
 }

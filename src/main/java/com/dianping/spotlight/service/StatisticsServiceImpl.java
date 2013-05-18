@@ -15,9 +15,15 @@
  */
 package com.dianping.spotlight.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import com.thoughtworks.xstream.XStream;
 
 /**
  * @author Leo Liang
@@ -107,4 +113,33 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
 
     }
+
+//    public static void main(String[] args) throws IOException {
+//        StatisticsService statisticsService = new StatisticsServiceImpl();
+//        Store store = new DefaultStore();
+//        store.init();
+//        statisticsService.setStore(store);
+//
+//        XStream xstream = new XStream();
+//        xstream.alias("set", HashSet.class);
+//        xstream.alias("map", HashMap.class);
+//        xstream.alias("leaderboard", Leaderboard.class);
+//        xstream.alias("string", String.class);
+//        xstream.alias("int", Integer.class);
+//        xstream.alias("double", Double.class);
+//        xstream.alias("hotkey", Hotkey.class);
+//        xstream.alias("list", ArrayList.class);
+//        xstream.alias("scorestat", ScoreStat.class);
+//        System.out.println(xstream.toXML(statisticsService.listHotkeys("eclipse")));
+//
+//        statisticsService.record("eclipse", statisticsService.listHotkeys("eclipse"), 90);
+//        System.out.println(statisticsService.record("eclipse", statisticsService.listHotkeys("eclipse"), 10));
+//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.1));
+//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.4));
+//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.3));
+//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.2));
+//
+//        System.in.read();
+//        System.exit(0);
+//    }
 }
