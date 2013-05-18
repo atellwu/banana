@@ -12,6 +12,16 @@ public class Hotkey implements Serializable {
     private String            videoUrl;
     private double            usage;
 
+    public Hotkey(Set<String> tokens, String name, String videoUrl, double usage) {
+        this.tokens = tokens;
+        this.name = name;
+        this.videoUrl = videoUrl;
+        this.usage = usage;
+    }
+
+    public Hotkey() {
+    }
+
     public double getUsage() {
         return usage;
     }

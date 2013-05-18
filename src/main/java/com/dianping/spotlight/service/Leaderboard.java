@@ -15,27 +15,33 @@
  */
 package com.dianping.spotlight.service;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Leo Liang
  * 
  */
-public interface Store {
+public class Leaderboard {
+    private List<ScoreStat> scores;
+    private int             size;
 
-    public void init();
+    public List<ScoreStat> getScores() {
+        return scores;
+    }
 
-    public Set<Hotkey> listHotkeys(String app);
+    public void setScores(List<ScoreStat> scores) {
+        this.scores = scores;
+    }
 
-    public void record(String appName, Set<Hotkey> hotkeys);
+    public int getSize() {
+        return size;
+    }
 
-    public void saveScore(String appName, int score);
+    public void setSize(int size) {
+        this.size = size;
+    }
 
-    public Leaderboard getLeaderboard(String appName);
-
-    public Map<Double, Integer> getUsages(String appName);
-
-    public void saveUsage(String appName, double usage);
-
+    public void increaseSize() {
+        this.size++;
+    }
 }

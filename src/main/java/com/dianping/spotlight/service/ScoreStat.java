@@ -15,27 +15,33 @@
  */
 package com.dianping.spotlight.service;
 
-import java.util.Map;
-import java.util.Set;
-
 /**
  * @author Leo Liang
  * 
  */
-public interface Store {
+public class ScoreStat implements Comparable<ScoreStat> {
+    private int score;
+    private int count;
 
-    public void init();
+    public ScoreStat(int score, int count) {
+        this.score = score;
+        this.count = count;
+    }
 
-    public Set<Hotkey> listHotkeys(String app);
+    @Override
+    public int compareTo(ScoreStat o) {
+        return this.score - o.score;
+    }
 
-    public void record(String appName, Set<Hotkey> hotkeys);
+    public int getScore() {
+        return score;
+    }
 
-    public void saveScore(String appName, int score);
+    public int getCount() {
+        return count;
+    }
 
-    public Leaderboard getLeaderboard(String appName);
-
-    public Map<Double, Integer> getUsages(String appName);
-
-    public void saveUsage(String appName, double usage);
-
+    public void increaseCount() {
+        this.count++;
+    }
 }
