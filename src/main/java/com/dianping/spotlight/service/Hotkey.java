@@ -43,5 +43,9 @@ public class Hotkey implements Serializable {
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
+	
+	public boolean sameAs(Set<String> tokens){
+		return this.tokens.equals(tokens);
+	}
 
 }
