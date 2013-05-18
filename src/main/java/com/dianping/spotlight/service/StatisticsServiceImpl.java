@@ -15,6 +15,8 @@
  */
 package com.dianping.spotlight.service;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -22,7 +24,9 @@ import java.util.Set;
  * 
  */
 public class StatisticsServiceImpl implements StatisticsService {
-    private Store store;
+    private static final double DEFAULT_HIGER_LOWERST = 0d;
+    private static final double DEFAULT_HIGER_HIGHEST = 100d;
+    private Store               store;
 
     public void setStore(Store store) {
         this.store = store;
@@ -50,18 +54,57 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public double record(String appName, Set<Hotkey> hotkeys, int score) {
         store.record(appName, hotkeys);
-        double higherThan = store.higherThan(appName, score);
+        double scorehigherThan = scorehigherThan(appName, score);
         store.saveScore(appName, score);
-        return higherThan;
+        return scorehigherThan;
     }
 
-    /* (non-Javadoc)
-     * @see com.dianping.spotlight.service.StatisticsService#usageHigherThan(double)
+    private double scorehigherThan(String appName, int score) {
+        Leaderboard appLeaderboard = store.getLeaderboard(appName);
+
+        if (appLeaderboard == null) {
+            return DEFAULT_HIGER_LOWERST;
+        }
+
+        if (appLeaderboard.getSize() == 0) {
+            return DEFAULT_HIGER_HIGHEST;
+        } else {
+            int higherThanCount = 0;
+            for (ScoreStat scoreStat : appLeaderboard.getScores()) {
+                if (scoreStat.getScore() < score) {
+                    higherThanCount += scoreStat.getCount();
+                } else {
+                    break;
+                }
+            }
+            return 100d * (higherThanCount / appLeaderboard.getSize());
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.dianping.spotlight.service.StatisticsService#usageHigherThan(double)
      */
     @Override
-    public double usageHigherThan(double usage) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+    public double usageHigherThan(String appName, double usage) {
+        Map<Double, Integer> usages = store.getUsages(appName);
+        if (usages == null) {
+            return DEFAULT_HIGER_LOWERST;
+        } else {
+            int higher = 0;
+            int total = 0;
+            for (Entry<Double, Integer> entry : usages.entrySet()) {
+                total += entry.getValue();
+                if (entry.getKey().compareTo(usage) < 0) {
+                    higher += entry.getValue();
+                }
+            }
 
+            store.saveUsage(appName, usage);
+            return total == 0 ? DEFAULT_HIGER_HIGHEST : 100d * higher / total;
+        }
+
+    }
 }

@@ -112,7 +112,7 @@ public class RecommendServiceImpl implements RecommendService {
 		}
 		
 		int score = hotkeyUsedScore(hotkeys, hotkeyToHotKeyMap.values(),50);
-		score = score + hotkeyPercentScore(hotkeyUsedTimes*1.0/operateTimes,50 );
+		score = score + hotkeyPercentScore(hotkeyUsedTimes*1.0/operateTimes,50 ,appName);
 		result.setScore(score);
 		result.setHigherThan(statisticsService.record(appName, hotkeys, score));
 		return result;
@@ -123,8 +123,8 @@ public class RecommendServiceImpl implements RecommendService {
 		return totalScore * (all.size()-notused.size())/all.size();
 	}
 	
-	private int hotkeyPercentScore(double percent, int totalScore){
-		double usageHigherThan = statisticsService.usageHigherThan(percent);
+	private int hotkeyPercentScore(double percent, int totalScore,String appName){
+		double usageHigherThan = statisticsService.usageHigherThan(appName,percent);
 		return (int)(totalScore * (1-usageHigherThan));
 	}
 	
@@ -152,7 +152,7 @@ public class RecommendServiceImpl implements RecommendService {
 		statisticsService = new StatisticsServiceImpl();
 		Store store = new DefaultStore();
 		store.init();
-		statisticsService.s
+		statisticsService.setStore(store);
 	}
 
 }
