@@ -55,4 +55,13 @@ public class StatisticsServiceImpl implements StatisticsService {
         return higherThan;
     }
 
+    /* (non-Javadoc)
+     * @see com.dianping.spotlight.service.StatisticsService#usageHigherThan(double)
+     */
+    @Override
+    public double usageHigherThan(double usage) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 }
