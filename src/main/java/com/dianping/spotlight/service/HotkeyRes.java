@@ -2,19 +2,18 @@ package com.dianping.spotlight.service;
 
 import java.io.Serializable;
 
-public class HotKeyRes implements Serializable {
+public class HotkeyRes implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Hotkey hotKey;
-	
+	private Hotkey hotkey;
 	private boolean used;
 
-	public Hotkey getHotKey() {
-		return hotKey;
+	public Hotkey getHotkey() {
+		return hotkey;
 	}
 
-	public void setHotKey(Hotkey hotKey) {
-		this.hotKey = hotKey;
+	public void setHotkey(Hotkey hotkey) {
+		this.hotkey = hotkey;
 	}
 
 
