@@ -22,9 +22,10 @@ import java.util.Set;
  * 
  */
 public class StatisticsServiceImpl implements StatisticsService {
+    private Store store;
 
-    public void init() {
-        Store.INSTANCE.init();
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     /*
@@ -36,7 +37,7 @@ public class StatisticsServiceImpl implements StatisticsService {
      */
     @Override
     public Set<Hotkey> listHotkeys(String appName) {
-        return Store.INSTANCE.listHotkeys(appName);
+        return store.listHotkeys(appName);
     }
 
     /*
@@ -48,9 +49,9 @@ public class StatisticsServiceImpl implements StatisticsService {
      */
     @Override
     public double record(String appName, Set<Hotkey> hotkeys, int score) {
-        Store.INSTANCE.record(appName, hotkeys);
-        double higherThan = Store.INSTANCE.higherThan(appName, score);
-        Store.INSTANCE.saveScore(appName, score);
+        store.record(appName, hotkeys);
+        double higherThan = store.higherThan(appName, score);
+        store.saveScore(appName, score);
         return higherThan;
     }
 
