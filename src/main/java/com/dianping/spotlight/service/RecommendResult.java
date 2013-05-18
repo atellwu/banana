@@ -4,43 +4,49 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RecommendResult implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<HotkeyRes> recommendKeys;
-	private int score;
-	private double higherThan;
-	private String appName;
+    private List<HotkeyRes> recommendKeys;
+    private int score;
+    private double higherThan;
+    private String appName;
 
-	public String getAppName() {
-		return appName;
-	}
+    public String getAppName() {
+        return appName;
+    }
 
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
-	public List<HotkeyRes> getRecommendKeys() {
-		return recommendKeys;
-	}
+    public List<HotkeyRes> getRecommendKeys() {
+        return recommendKeys;
+    }
 
-	public void setRecommendKeys(List<HotkeyRes> recommendKeys) {
-		this.recommendKeys = recommendKeys;
-	}
+    public void setRecommendKeys(List<HotkeyRes> recommendKeys) {
+        this.recommendKeys = recommendKeys;
+    }
 
-	public int getScore() {
-		return score;
-	}
+    public int getScore() {
+        return score;
+    }
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+    public void setScore(int score) {
+        this.score = score;
+    }
 
-	public double getHigherThan() {
-		return higherThan;
-	}
+    public double getHigherThan() {
+        return higherThan;
+    }
 
-	public void setHigherThan(double higherThan) {
-		this.higherThan = higherThan;
-	}
+    public void setHigherThan(double higherThan) {
+        this.higherThan = higherThan;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("RecommendResult [recommendKeys=%s, score=%s, higherThan=%s, appName=%s]", recommendKeys, score,
+                higherThan, appName);
+    }
 
 }

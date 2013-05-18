@@ -392,23 +392,23 @@ public class DefaultStore implements Store {
         FileUtils.writeStringToFile(new File(DEFAULT_APPHOTKEYSCONFIG_PATH), xstream.toXML(appHotkeys));
 
         // /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // DefaultStore store = new DefaultStore();
-        // store.init();
-        // Set<Hotkey> uses = new HashSet<Hotkey>();
-        // Set<String> utoken = new HashSet<String>();
-        // utoken.add("l_control");
-        // utoken.add("c");
-        // Hotkey uh1 = new Hotkey(utoken, "", "", 0);
-        // uses.add(uh1);
-        // store.record("eclipse", uses);
-        // store.saveUsage("eclipse", 0.1);
-        // store.saveScore("eclipse", 100);
-        //
-        // System.out.println(xstream.toXML(store.listHotkeys("eclipse")));
-        // System.out.println(xstream.toXML(store.getLeaderboard("eclipse")));
-        // System.out.println(xstream.toXML(store.getUsages("eclipse")));
-        //
-        // System.in.read();
-        // System.exit(0);
+         DefaultStore store = new DefaultStore();
+         store.init();
+         Set<Hotkey> uses = new HashSet<Hotkey>();
+         Set<String> utoken = new HashSet<String>();
+         utoken.add("l_control");
+         utoken.add("c");
+         Hotkey uh1 = new Hotkey(utoken, "", "", 0);
+         uses.add(uh1);
+         store.record("eclipse", uses);
+         store.saveUsage("eclipse", 0.1);
+         store.saveScore("eclipse", 100);
+        
+         System.out.println(xstream.toXML(store.listHotkeys("eclipse")));
+         System.out.println(xstream.toXML(store.getLeaderboard("eclipse")));
+         System.out.println(xstream.toXML(store.getUsages("eclipse")));
+        
+         System.in.read();
+         System.exit(0);
     }
 }

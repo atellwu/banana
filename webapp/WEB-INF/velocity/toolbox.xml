@@ -50,8 +50,17 @@
         <class>com.dianping.spotlight.config.Config</class>
     </tool>
 
+    <tool>
+        <key>gson</key>
+        <scope>application</scope>
+        <class>com.google.gson.Gson</class>
+    </tool>
 
-
+    <tool>
+        <key>string</key>
+        <scope>application</scope>
+        <class>java.lang.String</class>
+    </tool>
     <!-- ordinarily the SecureLinkTool would simply replace the StrutsLinkTool if SSL Ext. is in use - in that case the key would be 'link' but it's 'slink' here to distinguish between 
         the two. -->
 

@@ -189,6 +189,10 @@ progress:after {
 					xhr.open('POST', '/upload');
 					xhr.onload = function() {
 						progress.value = progress.innerHTML = 100;
+						//done
+	                    if (xhr.readyState==4 && xhr.status==200){
+	                        window.location.href="result";
+	                    }
 					};
 
 					if (tests.progress) {
@@ -202,6 +206,13 @@ progress:after {
 					}
 
 					xhr.send(formData);
+					
+					//done
+					xhr.onreadystatechange=function(){
+						if (xhr.readyState==4 && xhr.status==200){
+	                        window.location.href="result";
+	                    }
+				     }
 				}
 			}
 

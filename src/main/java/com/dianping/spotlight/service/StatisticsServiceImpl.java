@@ -23,16 +23,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.thoughtworks.xstream.XStream;
 
 /**
  * @author Leo Liang
- * 
  */
+@Service
 public class StatisticsServiceImpl implements StatisticsService {
     private static final double DEFAULT_HIGER_LOWERST = 0d;
     private static final double DEFAULT_HIGER_HIGHEST = 100d;
-    private Store               store;
+    private Store store;
 
     public void setStore(Store store) {
         this.store = store;
@@ -40,10 +42,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see
-     * com.dianping.spotlight.service.StatisticsService#listHotkeys(java.lang
-     * .String)
+     * @see com.dianping.spotlight.service.StatisticsService#listHotkeys(java.lang .String)
      */
     @Override
     public Set<Hotkey> listHotkeys(String appName) {
@@ -52,10 +51,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see
-     * com.dianping.spotlight.service.StatisticsService#record(java.util.Set,
-     * int)
+     * @see com.dianping.spotlight.service.StatisticsService#record(java.util.Set, int)
      */
     @Override
     public double record(String appName, Set<Hotkey> hotkeys, int score) {
@@ -89,9 +85,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see
-     * com.dianping.spotlight.service.StatisticsService#usageHigherThan(double)
+     * @see com.dianping.spotlight.service.StatisticsService#usageHigherThan(double)
      */
     @Override
     public double usageHigherThan(String appName, double usage) {
@@ -114,32 +108,32 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     }
 
-//    public static void main(String[] args) throws IOException {
-//        StatisticsService statisticsService = new StatisticsServiceImpl();
-//        Store store = new DefaultStore();
-//        store.init();
-//        statisticsService.setStore(store);
-//
-//        XStream xstream = new XStream();
-//        xstream.alias("set", HashSet.class);
-//        xstream.alias("map", HashMap.class);
-//        xstream.alias("leaderboard", Leaderboard.class);
-//        xstream.alias("string", String.class);
-//        xstream.alias("int", Integer.class);
-//        xstream.alias("double", Double.class);
-//        xstream.alias("hotkey", Hotkey.class);
-//        xstream.alias("list", ArrayList.class);
-//        xstream.alias("scorestat", ScoreStat.class);
-//        System.out.println(xstream.toXML(statisticsService.listHotkeys("eclipse")));
-//
-//        statisticsService.record("eclipse", statisticsService.listHotkeys("eclipse"), 90);
-//        System.out.println(statisticsService.record("eclipse", statisticsService.listHotkeys("eclipse"), 10));
-//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.1));
-//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.4));
-//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.3));
-//        System.out.println(statisticsService.usageHigherThan("eclipse", 0.2));
-//
-//        System.in.read();
-//        System.exit(0);
-//    }
+    //    public static void main(String[] args) throws IOException {
+    //        StatisticsService statisticsService = new StatisticsServiceImpl();
+    //        Store store = new DefaultStore();
+    //        store.init();
+    //        statisticsService.setStore(store);
+    //
+    //        XStream xstream = new XStream();
+    //        xstream.alias("set", HashSet.class);
+    //        xstream.alias("map", HashMap.class);
+    //        xstream.alias("leaderboard", Leaderboard.class);
+    //        xstream.alias("string", String.class);
+    //        xstream.alias("int", Integer.class);
+    //        xstream.alias("double", Double.class);
+    //        xstream.alias("hotkey", Hotkey.class);
+    //        xstream.alias("list", ArrayList.class);
+    //        xstream.alias("scorestat", ScoreStat.class);
+    //        System.out.println(xstream.toXML(statisticsService.listHotkeys("eclipse")));
+    //
+    //        statisticsService.record("eclipse", statisticsService.listHotkeys("eclipse"), 90);
+    //        System.out.println(statisticsService.record("eclipse", statisticsService.listHotkeys("eclipse"), 10));
+    //        System.out.println(statisticsService.usageHigherThan("eclipse", 0.1));
+    //        System.out.println(statisticsService.usageHigherThan("eclipse", 0.4));
+    //        System.out.println(statisticsService.usageHigherThan("eclipse", 0.3));
+    //        System.out.println(statisticsService.usageHigherThan("eclipse", 0.2));
+    //
+    //        System.in.read();
+    //        System.exit(0);
+    //    }
 }

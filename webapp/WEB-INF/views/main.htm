@@ -1,0 +1,133 @@
+<div class="container" style="margin: 0 auto; width: 100%; margin-bottom: 50px; height: 650px;">
+   <div id="main" role="main" style="width: 950px; margin: 0 auto;">
+      <ol id="keyboard" class="macbook-pro">
+         <li><span>~</span>`</li>
+         <li><span>!</span>1</li>
+         <li><span>@</span>2</li>
+         <li><span>#</span>3</li>
+         <li><span>$</span>4</li>
+         <li><span>%</span>5</li>
+         <li><span>^</span>6</li>
+         <li><span>&amp;</span>7</li>
+         <li><span>*</span>8</li>
+         <li><span>(</span>9</li>
+         <li><span>)</span>0</li>
+         <li><span>_</span>-</li>
+         <li><span>+</span>=</li>
+         <li class="special r" id="delete">delete</li>
+         <li class="special l" id="tab">tab</li>
+         <li>Q</li>
+         <li>W</li>
+         <li>E</li>
+         <li>R</li>
+         <li>T</li>
+         <li>Y</li>
+         <li>U</li>
+         <li>I</li>
+         <li>O</li>
+         <li>P</li>
+         <li><span>{</span>[</li>
+         <li><span>}</span>]</li>
+         <li><span>|</span>\</li>
+         <li class="special l" id="caps-lock">caps lock</li>
+         <li id="charA">A</li>
+         <li>S</li>
+         <li>D</li>
+         <li>F</li>
+         <li>G</li>
+         <li>H</li>
+         <li>J</li>
+         <li>K</li>
+         <li>L</li>
+         <li><span>:</span>;</li>
+         <li><span>"</span>'</li>
+         <li class="special r" id="enter"><span>enter</span>return</li>
+         <li class="special shift l">shift</li>
+         <li>Z</li>
+         <li>X</li>
+         <li>C</li>
+         <li>V</li>
+         <li>B</li>
+         <li>N</li>
+         <li>M</li>
+         <li><span>&lt;</span>,</li>
+         <li><span>&gt;</span>.</li>
+         <li><span>?</span>/</li>
+         <li class="special shift r">shift</li>
+         <li class="special tall l">fn</li>
+         <li class="special tall less-padding l">control</li>
+         <li class="special tall less-padding l"><span>alt</span>option</li>
+         <li class="special tall command r"><span style="display: none">command left</span><span>&#8984;</span>command</li>
+         <li class="special tall" id="space"></li>
+         <li class="special tall command l"><span style="display: none">command right</span><span>&#8984;</span>command</li>
+         <li class="special tall less-padding r"><span>alt</span>option</li>
+         <li class="arrow up"><span style="display: none">up</span>&#8593;</li>
+         <li class="arrow"><span style="display: none">left</span>&#8592;</li>
+         <li class="arrow down"><span style="display: none">down</span>&#8595;</li>
+         <li class="arrow"><span style="display: none">right</span>&#8594;</li>
+      </ol>
+   </div>
+   <script>
+				function clickHotkey(tokenArray) {
+					$('#charDiv').html('');
+					$('#keyboard > li').css('background-color', '#000000');
+					$.each(tokenArray, function(i, ele) {
+						display(ele);
+					});
+				};
+				function playVideo(videoUrl) {
+					console.log(videoUrl);
+				};
+				function display(ch) {
+					console.log('display ' + ch);
+					if (ch.length == 1) {
+						ch = ch.toUpperCase();
+					}
+					var someChar = $("li:contains('" + ch + "')");
+					if (someChar && someChar.length > 0) {
+						someChar.css('background-color', '#848484');
+						var topp = someChar.offset().top - 7;
+						var left = someChar.offset().left + 22;
+						var topp2 = topp - 30;
+						var left2 = left - 20;
+						var cc = $("<div class='cc' style='z-index: 9999; position: absolute; font-size: 100%; opacity: 0'></div>");
+						if (ch == 'command right' || ch == 'command left') {
+							ch = 'command';
+						}
+						cc.text(ch);
+						cc.css('top', topp);
+						cc.css('left', left);
+						cc.css('opacity', 0);
+						cc.appendTo($('#charDiv'));
+						cc.animate({
+							opacity : 1,
+							left : left2,
+							top : topp2,
+							fontSize : '500%'
+						}, 1000, function() {
+							//cc.remove();
+							//someChar.css('background-color', '#000000');
+						});
+					}
+				};
+				function runConsole() {
+					// 发送到服务端，如果保存成功,则继续，否则alert错误信息
+					var param = new Object();
+					// 发送ajax请求jsonp
+					var url = '/load';
+					$.ajax({
+						type : 'POST',
+						url : url,
+						data : param,
+						dataType : "json",
+						success : runConsoleDone
+					});
+				};
+				function runConsoleDone(data) {
+					console.log(data);
+					if (data.success == false) {
+					} else {
+					}
+				};
+			</script>
+</div>

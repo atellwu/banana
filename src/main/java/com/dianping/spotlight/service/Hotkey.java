@@ -7,10 +7,10 @@ public class Hotkey implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Set<String>       tokens;
-    private String            name;
-    private String            videoUrl;
-    private double            usage;
+    private Set<String> tokens;
+    private String name;
+    private String videoUrl;
+    private double usage;
 
     public Hotkey(Set<String> tokens, String name, String videoUrl, double usage) {
         this.tokens = tokens;
@@ -56,7 +56,6 @@ public class Hotkey implements Serializable {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -69,7 +68,6 @@ public class Hotkey implements Serializable {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -87,6 +85,11 @@ public class Hotkey implements Serializable {
         } else if (!tokens.equals(other.tokens))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Hotkey [tokens=%s, name=%s, videoUrl=%s, usage=%s]", tokens, name, videoUrl, usage);
     }
 
 }
