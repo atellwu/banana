@@ -9,4 +9,6 @@ public interface StatisticsService {
     public double record(String appName, Set<Hotkey> hotkeys, int score);
 
     public double usageHigherThan(double usage);
+    
+    public void setStore(Store store);
 }

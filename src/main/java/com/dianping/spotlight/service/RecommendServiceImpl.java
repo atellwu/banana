@@ -69,8 +69,10 @@ public class RecommendServiceImpl implements RecommendService {
 			List<Hotkey> hotkeyList = new ArrayList<Hotkey>(hotkeys);
 			Collections.sort(hotkeyList, new HotkeyCompartor());
 			hotkeys = new HashSet<Hotkey>();
-			for(Hotkey hotkey:hotkeyList)
-			hotkeys.add(hotkey);
+			for(int i = 0; i < MAX_HOTKEY_SIZE;i ++) {
+				hotkeys.add(hotkeyList.get(i));
+
+			}
 		} 
 		
 		
@@ -138,16 +140,19 @@ public class RecommendServiceImpl implements RecommendService {
 	class HotkeyCompartor implements Comparator<Hotkey> {
 		@Override
 		public int compare(Hotkey o1, Hotkey o2) {
-			return new Double(o1.getUsage()).compareTo(o2.getUsage());
+			//usage大的排在前面
+			return new Double(o2.getUsage()).compareTo(o1.getUsage());
 		}
 
 	}
 	
 	@Override
 	public void init() {
-//		statisticsService = new 
-//		statisticService.init();
 		
+		statisticsService = new StatisticsServiceImpl();
+		Store store = new DefaultStore();
+		store.init();
+		statisticsService.s
 	}
 
 }
