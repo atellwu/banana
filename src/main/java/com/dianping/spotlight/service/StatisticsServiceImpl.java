@@ -24,7 +24,7 @@ import java.util.Set;
 public class StatisticsServiceImpl implements StatisticsService {
 
     public void init() {
-
+        HotkeyStore.INSTANCE.init();
     }
 
     /*
@@ -36,8 +36,7 @@ public class StatisticsServiceImpl implements StatisticsService {
      */
     @Override
     public Set<Hotkey> listHotkeys(String appName) {
-        // TODO Auto-generated method stub
-        return null;
+        return HotkeyStore.INSTANCE.list(appName);
     }
 
     /*
@@ -48,9 +47,9 @@ public class StatisticsServiceImpl implements StatisticsService {
      * int)
      */
     @Override
-    public double record(Set<Hotkey> hotkeys, int score) {
-        // TODO Auto-generated method stub
-        return 0;
+    public double record(String appName, Set<Hotkey> hotkeys, int score) {
+        HotkeyStore.INSTANCE.record(appName, hotkeys);
+        return HotkeyStore.INSTANCE.higherThan(appName, score);
     }
 
 }
