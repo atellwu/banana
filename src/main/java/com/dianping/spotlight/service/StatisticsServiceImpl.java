@@ -36,7 +36,7 @@ public class StatisticsServiceImpl implements StatisticsService {
      */
     @Override
     public Set<Hotkey> listHotkeys(String appName) {
-        return Store.INSTANCE.list(appName);
+        return Store.INSTANCE.listHotkeys(appName);
     }
 
     /*
