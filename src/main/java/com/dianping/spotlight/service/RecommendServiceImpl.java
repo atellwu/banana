@@ -3,6 +3,9 @@ package com.dianping.spotlight.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +20,8 @@ public class RecommendServiceImpl implements RecommendService {
 	
 	private static final String APP_PREFIX = "active";
 	
+	private static final int MAX_HOTKEY_SIZE = 20;
+	
 	
 	@Override
 	public RecommendResult recommend(File inputSeqFile) {
@@ -26,6 +31,7 @@ public class RecommendServiceImpl implements RecommendService {
 			lines = FileUtils.readLines(inputSeqFile);
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		}
 		
 		RecommendResult result = new RecommendResult();
@@ -33,6 +39,8 @@ public class RecommendServiceImpl implements RecommendService {
 		List<HotkeyRes> hotkeyRess = new ArrayList<HotkeyRes>();
 		result.setAppName(appName);
 		result.setRecommendKeys(hotkeyRess);
+		int hotkeyUsedTimes = 0;
+		int operateTimes = lines.size();
 
 		for(String line:lines){
 			line = line.trim().toLowerCase();
@@ -55,11 +63,22 @@ public class RecommendServiceImpl implements RecommendService {
 		}
 		
 		Set<Hotkey> hotkeys = statisticsService.listHotkeys(appName);
-		Map<Set<String>,Hotkey> tokensToHotKeyMap = new HashMap<Set<String>,Hotkey>();
-		Map<Set<String>,Integer> tokensToNumMap = new HashMap<Set<String>,Integer>();
+		if(hotkeys == null || hotkeys.size()==0) {
+			return null;
+		} else if(hotkeys.size() > MAX_HOTKEY_SIZE){ //最多20个快捷键
+			List<Hotkey> hotkeyList = new ArrayList<Hotkey>(hotkeys);
+			Collections.sort(hotkeyList, new HotkeyCompartor());
+			hotkeys = new HashSet<Hotkey>();
+			for(Hotkey hotkey:hotkeyList)
+			hotkeys.add(hotkey);
+		} 
+		
+		
+		Map<Hotkey,Hotkey> hotkeyToHotKeyMap = new HashMap<Hotkey,Hotkey>();
+//		Set<Hotkey> HotkeyUsed =  new HashSet<Hotkey>();
+//		Map<Set<String>,Integer> tokensToNumMap = new HashMap<Set<String>,Integer>();
 		for(Hotkey hotkey:hotkeys){
-			tokensToHotKeyMap.put(hotkey.getTokens(), hotkey);
-			tokensToNumMap.put(hotkey.getTokens(), 0);
+			hotkeyToHotKeyMap.put(hotkey, hotkey);
 		}
 		for(String line:lines){
 			line = line.trim().toLowerCase();
@@ -67,26 +86,63 @@ public class RecommendServiceImpl implements RecommendService {
 			for(String token:line.split(" ")){
 				tokens.add(token);
 			}
-			if(tokensToHotKeyMap.containsKey(tokens)){
+			Hotkey hotkeyUsed = new Hotkey();
+			hotkeyUsed.setTokens(tokens);
+			if(hotkeys.contains(hotkeyUsed)){
 				HotkeyRes hotkeyRes = new HotkeyRes();
-				hotkeyRes.setHotkey(tokensToHotKeyMap.get(tokens));
+				hotkeyRes.setHotkey(hotkeyToHotKeyMap.get(hotkeyUsed));
 				hotkeyRes.setUsed(true);
 				hotkeyRess.add(hotkeyRes);
-				tokensToHotKeyMap.remove(tokens);
+				hotkeyToHotKeyMap.remove(tokens);
+			}
+			if(hotkeys.contains(hotkeyUsed)){
+				hotkeyUsedTimes ++;
 			}
 		}
-		if(!tokensToHotKeyMap.isEmpty()){
-			for(Set<String> tokens:tokensToHotKeyMap.keySet()){
+		Collections.sort(hotkeyRess, new HotkeyResCompartor());
+		if(!hotkeyToHotKeyMap.isEmpty()){
+			for(Hotkey hotkey:hotkeyToHotKeyMap.keySet()){
 				HotkeyRes hotkeyRes = new HotkeyRes();
-				hotkeyRes.setHotkey(tokensToHotKeyMap.get(tokens));
+				hotkeyRes.setHotkey(hotkeyToHotKeyMap.get(hotkey));
 				hotkeyRes.setUsed(false);
 				hotkeyRess.add(hotkeyRes);
 			}
 		}
 		
+		int score = hotkeyUsedScore(hotkeys, hotkeyToHotKeyMap.values(),50);
+		score = score + hotkeyPercentScore(hotkeyUsedTimes*1.0/operateTimes,50 );
+		result.setScore(score);
+		result.setHigherThan(statisticsService.record(appName, hotkeys, score));
 		return result;
 	}
 
+	
+	private int hotkeyUsedScore(Collection<Hotkey> all,Collection<Hotkey> notused, int totalScore){
+		return totalScore * (all.size()-notused.size())/all.size();
+	}
+	
+	private int hotkeyPercentScore(double percent, int totalScore){
+		double usageHigherThan = statisticsService.usageHigherThan(percent);
+		return (int)(totalScore * (1-usageHigherThan));
+	}
+	
+	class HotkeyResCompartor implements Comparator<HotkeyRes> {
+		@Override
+		public int compare(HotkeyRes o1, HotkeyRes o2) {
+			HotkeyCompartor comparator = new HotkeyCompartor();
+			return  comparator.compare(o1.getHotkey(), o2.getHotkey());
+		}
+		
+	}
+	
+	class HotkeyCompartor implements Comparator<Hotkey> {
+		@Override
+		public int compare(Hotkey o1, Hotkey o2) {
+			return new Double(o1.getUsage()).compareTo(o2.getUsage());
+		}
+
+	}
+	
 	@Override
 	public void init() {
 //		statisticsService = new 
