@@ -1,8 +1,13 @@
 <div class="container" style="margin: 0 auto; width: 100%; margin-bottom: 50px; height: 650px;">
    <div id="main" role="main" style="width: 950px; margin: 0 auto;">
-      <video width="320" height="240" controls>
-         <source id="videoDiv" src="" type="video/mp4">
-      </video>
+      <div id="videoDivP">
+         <video id="videoDiv" width="320" height="240" controls>
+            <source src="" type="video/mp4">
+      
+      
+         
+         </video>
+      </div>
       <ol id="keyboard" class="macbook-pro">
          <li><span>~</span>`</li>
          <li><span>!</span>1</li>
@@ -81,7 +86,9 @@
 				function playVideo(videoName) {
 					var videoUrl = '${rc.contextPath}/public/videos/'
 							+ videoName + '.mp4';
-					$('#videoDiv').attr('src', videoUrl);
+					$('#videoDiv > source').attr('src', videoUrl);
+					var html = $('#videoDivP').html();
+					$('#videoDivP').html(html);
 				};
 				function display(ch) {
 					if (ch.length == 1) {
