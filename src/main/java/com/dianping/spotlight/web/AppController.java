@@ -65,9 +65,9 @@ public class AppController {
     public ModelAndView result(HttpSession session) {
         Map<String, Object> map = new HashMap<String, Object>();
         //TODO 调用service，加载文件，得到result
-        RecommendResult result2 = (RecommendResult) session.getAttribute("result2");
-
-        map.put("result2", result2);
+        //        RecommendResult result2 = (RecommendResult) session.getAttribute("result");
+        //
+        //        map.put("result2", result2);
         map.put("homeActive", true);
         return new ModelAndView("container", map);
     }
