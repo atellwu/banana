@@ -375,17 +375,53 @@ public class DefaultStore implements Store {
         // add hotkey to generate file
         // copy
         Set<String> t1 = new HashSet<String>();
-        t1.add("l_control");
+        t1.add("control");
         t1.add("c");
         Hotkey h1 = new Hotkey(t1, "Copy", "", 0d);
         hotkeys.add(h1);
 
         // pase
         Set<String> t2 = new HashSet<String>();
-        t2.add("l_control");
+        t2.add("control");
         t2.add("v");
         Hotkey h2 = new Hotkey(t2, "Paste", "", 0d);
         hotkeys.add(h2);
+        
+        Set<String> t3 = new HashSet<String>();
+        t3.add("control");
+        t3.add("/");
+        Hotkey h3 = new Hotkey(t3, "Comment", "", 0d);
+        hotkeys.add(h3);
+        
+        Set<String> t4 = new HashSet<String>();
+        t4.add("alt");
+        t4.add("/");
+        Hotkey h4 = new Hotkey(t4, "Assit", "", 0d);
+        hotkeys.add(h4);
+        
+        Set<String> t5 = new HashSet<String>();
+        t5.add("alt");
+        t5.add("left");
+        Hotkey h5 = new Hotkey(t5, "Previous", "", 0d);
+        hotkeys.add(h5);
+        
+        Set<String> t6 = new HashSet<String>();
+        t6.add("alt");
+        t6.add("up");
+        Hotkey h6 = new Hotkey(t6, "Move Line up", "", 0d);
+        hotkeys.add(h6);
+        
+        Set<String> t7 = new HashSet<String>();
+        t7.add("alt");
+        t7.add("right");
+        Hotkey h7 = new Hotkey(t7, "forward", "", 0d);
+        hotkeys.add(h7);
+        
+        Set<String> t8 = new HashSet<String>();
+        t8.add("alt");
+        t8.add("down");
+        Hotkey h8 = new Hotkey(t8, "Move Line down", "", 0d);
+        hotkeys.add(h8);
         // end add hotkey to generate file
         // ////////////////////////////////////////////
 

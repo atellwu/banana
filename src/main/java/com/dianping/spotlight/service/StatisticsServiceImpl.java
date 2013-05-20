@@ -15,17 +15,12 @@
  */
 package com.dianping.spotlight.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
-
-import com.thoughtworks.xstream.XStream;
 
 /**
  * @author Leo Liang
