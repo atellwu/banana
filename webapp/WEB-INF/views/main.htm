@@ -15,7 +15,7 @@
                   var video_${velocityCount} = "$recommendKey.hotkey.videoUrl";
              </script>
                <tr style="cursor: pointer;" onclick="clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"
-                  #if($recommendKey.used) class="success" #end>
+                  #if($recommendKey.used) style="color:#00FF00" #end>
                   <td>$recommendKey.hotkey.name</td>
                   <td>$string.format("%.0f%%",$recommendKey.hotkey.usage)</td>
                </tr>
