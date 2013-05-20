@@ -1,19 +1,7 @@
 <div class="container " style="border-radius: 3px 3px 3px 3px; height: 100px; width: 800px; margin-top: 20px;">
-   <div class="row" style="width: 600px; margin: 0 auto;">
-      <div class="span2">abc</div>
-      <div class="span2">可以改为</div>
-      <div class="span2">dsa</div>
-   </div>
+   <div class="row" style="width: 600px; margin: 0 auto;"></div>
 </div>
 
-<script>
-	var a = $('#a');
-	var b = $('#b');
-	a.animate({
-		opacity : 1,
-	}, 2000, function() {
-	});
-</script>
 <div id="main" role="main" style="width: 950px; margin: 0 auto;">
    <ol id="keyboard" class="macbook-pro">
       <li><span>~</span>`</li>
@@ -72,32 +60,31 @@
       <li class="special tall l">fn</li>
       <li class="special tall less-padding l">control</li>
       <li class="special tall less-padding l"><span>alt</span>option</li>
-      <li class="special tall command r"><span style="display:none">command left</span><span>&#8984;</span>command</li>
+      <li class="special tall command r"><span style="display: none">command left</span><span>&#8984;</span>command</li>
       <li class="special tall" id="space"></li>
-      <li class="special tall command l"><span style="display:none">command right</span><span>&#8984;</span>command</li>
+      <li class="special tall command l"><span style="display: none">command right</span><span>&#8984;</span>command</li>
       <li class="special tall less-padding r"><span>alt</span>option</li>
-      <li class="arrow up"><span style="display:none">up</span>&#8593;</li>
-      <li class="arrow"><span style="display:none">left</span>&#8592;</li>
-      <li class="arrow down"><span style="display:none">down</span>&#8595;</li>
-      <li class="arrow"><span style="display:none">right</span>&#8594;</li>
+      <li class="arrow up"><span style="display: none">up</span>&#8593;</li>
+      <li class="arrow"><span style="display: none">left</span>&#8592;</li>
+      <li class="arrow down"><span style="display: none">down</span>&#8595;</li>
+      <li class="arrow"><span style="display: none">right</span>&#8594;</li>
    </ol>
 </div>
 <script>
 	function display(ch) {
-		if(ch.length==1){
+		if (ch.length == 1) {
 			ch = ch.toUpperCase();
 		}
-		console.log($("li:contains('" + ch + "')").text());
-		var someChar = $("li:contains('" + ch + "')");
-		someChar.css('background-color','#848484');
+		var someChar = $("ol#keyboard > li:contains('" + ch + "')");
+		someChar.css('background-color', '#848484');
 		var topp = someChar.offset().top - 7;
 		var left = someChar.offset().left + 22;
-		var topp2 = topp -30;
+		var topp2 = topp - 30;
 		var left2 = left - 20;
 		var cc = $("<div class='cc' style='z-index: 9999; position: absolute; font-size: 100%; opacity: 0'></div>");
-		if(ch == 'command right' || ch == 'command left' ){
-            ch = 'command';
-        }
+		if (ch == 'command right' || ch == 'command left') {
+			ch = 'command';
+		}
 		cc.text(ch);
 		cc.css('top', topp);
 		cc.css('left', left);
@@ -110,29 +97,25 @@
 			fontSize : '500%'
 		}, 1000, function() {
 			cc.remove();
-			someChar.css('background-color','#000000');
+			someChar.css('background-color', '#000000');
 		});
 	};
 	function runConsole() {
-        // 发送到服务端，如果保存成功,则继续，否则alert错误信息
-        var param = new Object();
-        // 发送ajax请求jsonp
-        var url = '/load';
-        $.ajax({
-            type : 'POST',
-            url : url,
-            data : param,
-            dataType : "json",
-            success : runConsoleDone
-        });
-    };
-    function runConsoleDone(data) {
-    	console.log(data);
-        if (data.success == false) {
-        } else {
-        }
-    };
-	display('up');
-	display(',');
-	display('d');
+		// 发送到服务端，如果保存成功,则继续，否则alert错误信息
+		var param = new Object();
+		// 发送ajax请求jsonp
+		var url = '/load';
+		$.ajax({
+			type : 'POST',
+			url : url,
+			data : param,
+			dataType : "json",
+			success : runConsoleDone
+		});
+	};
+	function runConsoleDone(data) {
+		if (data.success == false) {
+		} else {
+		}
+	};
 </script>

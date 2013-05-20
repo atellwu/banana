@@ -2,8 +2,8 @@
 <script>
 	
 </script>
-<div class="row">
-   <div class="span2">
+<div class="row" style="">
+ <!--   <div class="span2">
       <ul class="well nav nav-pills nav-stacked">
       <li class="nav-header"><i class="icon-tasks"></i> 推荐快捷键</li>
        <li class="divider_line"></li>
@@ -12,9 +12,9 @@
          var tokens_${velocityCount} = $gson.toJson($recommendKey.hotkey.tokens);
          var video_${velocityCount} = "$recommendKey.hotkey.videoUrl";
 									</script>
-         <li class="$!{indexActive}"><a href="javascript:clickHotkey(tokens_${velocityCount});playVideo(video_${velocityCount});"><i class="icon-fire"></i>
+         <li class="$!{indexActive}"><a href="javascript:clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"><i class="icon-fire"></i>
                $recommendKey.hotkey.name <span style="margin-left:0px; #if($recommendKey.used) color:green #end">$string.format("%.0f%%",$recommendKey.hotkey.usage)</span></a> </li> #end
       </ul>
-   </div>
-   <div class="span10">#parse("main.htm")</div>
+   </div> -->
+   <div style="margin: 0 auto;">#parse("main.htm")</div>
 </div>

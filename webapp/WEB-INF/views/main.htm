@@ -1,5 +1,36 @@
-<div class="container" style="margin: 0 auto; width: 100%; margin-bottom: 50px; height: 650px;">
+<div class="container" style="width: 950px; margin-bottom: 50px; height: 650px;">
    <div id="main" role="main" style="width: 950px; margin: 0 auto;">
+      <div style="overflow: auto; height: 480px;float: right; width: 250px">
+         <table class="table table-hover" >
+            <thead>
+               <tr>
+                  <th>快捷键名</th>
+                  <th>用户使用率</th>
+               </tr>
+            </thead>
+            <tbody>
+               #foreach($recommendKey in $result.recommendKeys)
+               <script>
+                  var tokens_${velocityCount} = $gson.toJson($recommendKey.hotkey.tokens);
+                  var video_${velocityCount} = "$recommendKey.hotkey.videoUrl";
+             </script>
+               <tr style="cursor: pointer;#if($recommendKey.used) background-color:#3ADF00 #end" onclick="clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"
+                  >
+                  <td>$recommendKey.hotkey.name</td>
+                  <td>$string.format("%.0f%%",$recommendKey.hotkey.usage)</td>
+               </tr>
+               #end
+            </tbody>
+         </table>
+         <p style="font-size:12px;margin-top:0px"><span style="color:#088A08">绿色</span>表示已经使用过的快捷键</p>
+      </div>
+      <div id="videoDivP" style="">
+         <video id="videoDiv" width="640" height="480" autoplay>
+            <source src="/public/videos/Move Line down.mp4" type="video/mp4">
+         
+            
+         </video>
+      </div>
       <ol id="keyboard" class="macbook-pro">
          <li><span>~</span>`</li>
          <li><span>!</span>1</li>
@@ -55,12 +86,12 @@
          <li><span>?</span>/</li>
          <li class="special shift r">shift</li>
          <li class="special tall l">fn</li>
-         <li class="special tall less-padding l">control</li>
+         <li class="special tall less-padding l"><span style="display: none">l_control</span>control</li>
          <li class="special tall less-padding l"><span>alt</span>option</li>
-         <li class="special tall command r"><span style="display: none">command left</span><span>&#8984;</span>command</li>
+         <li class="special tall command r"><span style="display: none">cmd</span><span>&#8984;</span>command</li>
          <li class="special tall" id="space"></li>
-         <li class="special tall command l"><span style="display: none">command right</span><span>&#8984;</span>command</li>
-         <li class="special tall less-padding r"><span>alt</span>option</li>
+         <li class="special tall command l"><span>&#8984;</span>command</li>
+         <li class="special tall less-padding r"><span style="display: none">alt-right</span><span>alt</span>option</li>
          <li class="arrow up"><span style="display: none">up</span>&#8593;</li>
          <li class="arrow"><span style="display: none">left</span>&#8592;</li>
          <li class="arrow down"><span style="display: none">down</span>&#8595;</li>
@@ -75,15 +106,22 @@
 						display(ele);
 					});
 				};
-				function playVideo(videoUrl) {
-					console.log(videoUrl);
+				function playVideo(videoName) {
+					var videoUrl = '${rc.contextPath}/public/videos/'
+							+ videoName + '.mp4';
+					$('#videoDiv > source').attr('src', videoUrl);
+					var html = $('#videoDivP').html();
+					$('#videoDivP').html(html);
 				};
 				function display(ch) {
-					console.log('display ' + ch);
 					if (ch.length == 1) {
 						ch = ch.toUpperCase();
 					}
-					var someChar = $("li:contains('" + ch + "')");
+					var ch2 = ch;
+					if(ch=='alt'){
+						ch2 = 'alt-right';
+					}
+					var someChar = $("ol#keyboard > li:contains('" + ch2 + "')");
 					if (someChar && someChar.length > 0) {
 						someChar.css('background-color', '#848484');
 						var topp = someChar.offset().top - 7;
@@ -91,8 +129,11 @@
 						var topp2 = topp - 30;
 						var left2 = left - 20;
 						var cc = $("<div class='cc' style='z-index: 9999; position: absolute; font-size: 100%; opacity: 0'></div>");
-						if (ch == 'command right' || ch == 'command left') {
+						if (ch == 'cmd right' || ch == 'cmd left') {
 							ch = 'command';
+						}
+						if (ch == 'l_control') {
+							ch = 'control';
 						}
 						cc.text(ch);
 						cc.css('top', topp);

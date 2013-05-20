@@ -53,9 +53,9 @@ public class AppController {
         //保存文件
         List<String> lines = IOUtils.readLines(file.getInputStream(), "UTF8");
         System.out.println(lines);
-        RecommendResult result = recommendService.recommend(lines);
-        System.out.println("result: " + result);
-        session.setAttribute("result", result);
+        RecommendResult result2 = recommendService.recommend(lines);
+        System.out.println("result: " + result2);
+        session.setAttribute("result", result2);
 
         map.put("homeActive", true);
         return new ModelAndView("container", map);
@@ -65,9 +65,9 @@ public class AppController {
     public ModelAndView result(HttpSession session) {
         Map<String, Object> map = new HashMap<String, Object>();
         //TODO 调用service，加载文件，得到result
-        RecommendResult result = (RecommendResult) session.getAttribute("result");
-
-        map.put("result", result);
+        //        RecommendResult result2 = (RecommendResult) session.getAttribute("result");
+        //
+        //        map.put("result2", result2);
         map.put("homeActive", true);
         return new ModelAndView("container", map);
     }
