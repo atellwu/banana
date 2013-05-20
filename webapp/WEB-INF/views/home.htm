@@ -5,32 +5,57 @@
 		</div>
 	</div>
 </div>
-<div class="container" style="margin-top: 60px">
-	<div class="row">
-		<h2 align="center">快到框里来！</h2>
+<section id="wrapper">
+	<article>
+		<div class="container" style="margin-top: 60px">
+			<div class="row" style="text-align: center">
+				<h2 align="center">快到框里来！</h2>
+				<hr />
+				<div id="holder"
+					style="background-image: url('http://192.168.26.80/angry_banana.png'); background-size: 300px; background-position: center; background-repeat: no-repeat;"></div>
+				<p id="upload" class="hidden">
+					<label>拖拽不给力啊，只能土一点了<br> <input type="file">
+					</label>
+				</p>
+				<p id="filereader" class="hidden">文件预览不给力啊，只能去看分析结果了</p>
+				<p id="formdata" class="hidden">XHR2's FormData is not supported</p>
+				<p id="progress" class="hidden">XHR2's upload progress isn't
+					supported</p>
+				<div class="progress" style="text-align: center">
+					<progress class="bar bar-warning" id="uploadprogress" min="0"
+						max="100" value="0" style="width: 0%">0</progress>
+				</div>
+				<button id="analytic" class="btn btn-primary btn-large"
+					onclick="send()" disabled="disabled">开始分析!</button>
+				<hr />
+				<div class="row-fluid">
+					<div class="span4">
+						<h2>Heading</h2>
+						<p>Donec id elit non mi porta gravida at eget metus. Fusce
+							dapibus, tellus ac cursus commodo, tortor mauris condimentum
+							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+							malesuada magna mollis euismod. Donec sed odio dui.</p>
+					</div>
+					<div class="span4">
+						<h2>Heading</h2>
+						<p>Donec id elit non mi porta gravida at eget metus. Fusce
+							dapibus, tellus ac cursus commodo, tortor mauris condimentum
+							nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+							malesuada magna mollis euismod. Donec sed odio dui.</p>
+					</div>
+					<div class="span4">
+						<h2>Heading</h2>
+						<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis
+							in, egestas eget quam. Vestibulum id ligula porta felis euismod
+							semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+							condimentum nibh, ut fermentum massa.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
 
-		<article>
-			<div id="holder"></div>
-			<p id="upload" class="hidden">
-				<label>Drag &amp; drop not supported, but you can still
-					upload via this input field:<br> <input type="file">
-				</label>
-			</p>
-			<p id="filereader" class="hidden">File API &amp; FileReader API
-				not supported</p>
-			<p id="formdata" class="hidden">XHR2's FormData is not supported</p>
-			<p id="progress" class="hidden">XHR2's upload progress isn't
-				supported</p>
-			<p class="progress">
-				<progress class="bar" id="uploadprogress" min="0" max="100"
-					value="0" style="width: 0%">0</progress>
-			</p>
-
-		</article>
-
-	</div>
-</div>
-<script>
+	<script>
 		var holder = document.getElementById('holder'), tests = {
 			filereader : typeof FileReader != 'undefined',
 			dnd : 'draggable' in document.createElement('span'),
@@ -43,7 +68,7 @@
 		}, acceptedTypes = {
 			'text/plain' : true
 		}, progress = document.getElementById('uploadprogress'), fileupload = document
-				.getElementById('upload');
+				.getElementById('upload'), analytic = document.getElementById('analytic');
 
 		"filereader formdata progress".split(' ').forEach(function(api) {
 			if (tests[api] === false) {
@@ -73,7 +98,11 @@
 				console.log(file);
 			}
 		}
-
+		
+		function send() {
+			window.location.href = "result";
+		}
+		
 		function readfiles(files) {
 			debugger;
 			var formData = tests.formdata ? new FormData() : null;
@@ -91,7 +120,7 @@
 					progress.value = progress.innerHTML = 100;
 					//done
 					if (xhr.readyState == 4 && xhr.status == 200) {
-						window.location.href = "result";
+						analytic.disabled = "";
 					}
 				};
 
@@ -99,18 +128,18 @@
 					xhr.upload.onprogress = function(event) {
 						if (event.lengthComputable) {
 							var complete = (event.loaded / event.total * 100 | 0);
-							<!-- progress.value = progress.innerHTML = complete;-->
-							progress.style = "width:" + complete;
+							<!-- progress.value = progress.innerHTML = complete; -->
+							progress.style.cssText = "width:" + complete + "%";
 						}
 					}
 				}
 
 				xhr.send(formData);
-
+				
 				//done
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4 && xhr.status == 200) {
-						window.location.href = "result";
+						analytic.disabled = "";
 					}
 				}
 			}
@@ -137,3 +166,4 @@
 			};
 		}
 	</script>
+</section>
