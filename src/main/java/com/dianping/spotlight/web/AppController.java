@@ -55,7 +55,7 @@ public class AppController {
         System.out.println(lines);
         RecommendResult result2 = recommendService.recommend(lines);
         System.out.println("result: " + result2);
-        session.setAttribute("result2", result2);
+        session.setAttribute("result", result2);
 
         map.put("homeActive", true);
         return new ModelAndView("container", map);
