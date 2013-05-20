@@ -87,6 +87,8 @@ public class RecommendServiceImpl implements RecommendService {
         for (Hotkey hotkey : hotkeys) {
             hotkeyToHotKeyMap.put(hotkey, hotkey);
         }
+        Set<Hotkey> hotkeysUsed = new HashSet<Hotkey>();
+
         for (String line : lines) {
             line = line.trim().toLowerCase();
             Set<String> tokens = new HashSet<String>();
@@ -100,7 +102,8 @@ public class RecommendServiceImpl implements RecommendService {
                 hotkeyRes.setHotkey(hotkeyToHotKeyMap.get(hotkeyUsed));
                 hotkeyRes.setUsed(true);
                 hotkeyRess.add(hotkeyRes);
-                hotkeyToHotKeyMap.remove(hotkeyUsed);
+                hotkeysUsed.add( hotkeyToHotKeyMap.remove(hotkeyUsed));
+                
             }
             if (hotkeys.contains(hotkeyUsed)) {
                 hotkeyUsedTimes++;
@@ -116,17 +119,18 @@ public class RecommendServiceImpl implements RecommendService {
             }
         }
 
-        int score = hotkeyUsedScore(hotkeys.size(), hotkeyToHotKeyMap.keySet().size(), 50);
+        int score = hotkeyUsedScore(hotkeys.size(), hotkeysUsed.size(), 50);
         score = score + hotkeyPercentScore(hotkeyUsedTimes * 1.0 / operateTimes, 50, appName);
+        
         result.setScore(score);
-        result.setHigherThan(statisticsService.record(appName, hotkeys, score));
+        result.setHigherThan(statisticsService.record(appName, hotkeysUsed, score));
         result.setAppName(appName);
         return result;
     }
 
-    private int hotkeyUsedScore(int all, int notused, int totalScore) 
+    private int hotkeyUsedScore(int all, int used, int totalScore) 
     {
-        return (int) 1.0 * totalScore * (all - notused) / all;
+        return (int) 1.0 * totalScore * used / all;
     }
 
     private int hotkeyPercentScore(double percent, int totalScore, String appName) {
