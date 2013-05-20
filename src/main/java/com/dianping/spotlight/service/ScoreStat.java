@@ -27,6 +27,10 @@ public class ScoreStat implements Comparable<ScoreStat> {
         this.score = score;
         this.count = count;
     }
+    
+    public ScoreStat(){
+    	
+    }
 
     @Override
     public int compareTo(ScoreStat o) {
