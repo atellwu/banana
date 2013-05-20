@@ -220,7 +220,7 @@ public class DefaultStore implements Store {
                 hotkeyUsage = 0;
             }
             res.add(new Hotkey(hotkey.getTokens(), hotkey.getName(), hotkey.getVideoUrl(), appStatCount == 0 ? 0d
-                    : 100d * (hotkeyUsage / appStatCount)));
+                    : 100d * hotkeyUsage / appStatCount));
         }
         return res;
     }

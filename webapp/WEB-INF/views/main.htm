@@ -1,7 +1,7 @@
-<div class="container" style="width: 950px; margin-bottom: 50px; height: 650px;">
-   <div id="main" role="main" style="width: 950px; margin: 0 auto;">
-      <div style="overflow: auto; height: 480px;float: right; width: 250px">
-         <table class="table table-hover" >
+<div class="container" style="width: 1000px; margin-bottom: 50px; height: 650px;">
+   <div id="main" role="main" style="width: 1000px; margin: 0 auto;">
+      <div style="overflow: auto; height: 480px;float: right; width: 320px">
+         <table class="table table-hover" id="ver-minimalist">
             <thead>
                <tr>
                   <th>快捷键名</th>
@@ -14,7 +14,7 @@
                   var tokens_${velocityCount} = $gson.toJson($recommendKey.hotkey.tokens);
                   var video_${velocityCount} = "$recommendKey.hotkey.videoUrl";
              </script>
-               <tr style="cursor: pointer;#if($recommendKey.used) background-color:#3ADF00 #end" onclick="clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"
+               <tr style="cursor: pointer;#if($recommendKey.used) background-color:#FFCC66 #end" onclick="clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"
                   >
                   <td>$recommendKey.hotkey.name</td>
                   <td>$string.format("%.0f%%",$recommendKey.hotkey.usage)</td>
@@ -22,11 +22,13 @@
                #end
             </tbody>
          </table>
-         <p style="font-size:12px;margin-top:0px"><span style="color:#088A08">绿色</span>表示已经使用过的快捷键</p>
+         <p style="font-size:12px;margin-top:0px"><span style="color:#088A08">*橙色</span>表示你使用了的快捷键</p>
+		 <p style="font-size:16px;margin-top:0px">您的综合评分为: <span class="score">$result.score</span></p>
+		 <p style="font-size:16px;margin-top:0px">击败了<span class="percentage">$string.format("%.0f%%",$result.higherThan)</span>的DPer!</p>
       </div>
       <div id="videoDivP" style="">
-         <video id="videoDiv" width="640" height="480" autoplay>
-            <source src="/public/videos/Move Line down.mp4" type="video/mp4">
+         <video id="videoDiv" width="640" height="480" autoplay controls>
+            <source src="/public/videos/Move Line Down.mp4" type="video/mp4">
          
             
          </video>
@@ -73,7 +75,7 @@
          <li><span>:</span>;</li>
          <li><span>"</span>'</li>
          <li class="special r" id="enter"><span>enter</span>return</li>
-         <li class="special shift l">shift</li>
+         <li class="special shift r"><span style="display: none">shift-left</span>shift</li>
          <li>Z</li>
          <li>X</li>
          <li>C</li>
@@ -121,6 +123,9 @@
 					if(ch=='alt'){
 						ch2 = 'alt-right';
 					}
+					if(ch=='shift'){
+						ch2 = 'shift-left';
+					}
 					var someChar = $("ol#keyboard > li:contains('" + ch2 + "')");
 					if (someChar && someChar.length > 0) {
 						someChar.css('background-color', '#848484');
@@ -135,7 +140,7 @@
 						if (ch == 'l_control') {
 							ch = 'control';
 						}
-						cc.text(ch);
+						cc.text(ch.toUpperCase());
 						cc.css('top', topp);
 						cc.css('left', left);
 						cc.css('opacity', 0);

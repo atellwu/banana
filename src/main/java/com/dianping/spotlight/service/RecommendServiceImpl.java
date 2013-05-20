@@ -109,7 +109,6 @@ public class RecommendServiceImpl implements RecommendService {
                 hotkeyUsedTimes++;
             }
         }
-        Collections.sort(hotkeyRess, new HotkeyResCompartor());
         if (!hotkeyToHotKeyMap.isEmpty()) {
             for (Hotkey hotkey : hotkeyToHotKeyMap.keySet()) {
                 HotkeyRes hotkeyRes = new HotkeyRes();
@@ -118,6 +117,7 @@ public class RecommendServiceImpl implements RecommendService {
                 hotkeyRess.add(hotkeyRes);
             }
         }
+        Collections.sort(hotkeyRess, new HotkeyResCompartor());
 
         int score = hotkeyUsedScore(hotkeys.size(), hotkeysUsed.size(), 50);
         score = score + hotkeyPercentScore(hotkeyUsedTimes * 1.0 / operateTimes, 50, appName);
@@ -168,7 +168,7 @@ public class RecommendServiceImpl implements RecommendService {
     public static void main(String []args) {
     	RecommendService service = new RecommendServiceImpl();
     	service.init();
-    	File file = new File("/data/appdatas/banana/sample.txt");
+    	File file = new File("/Users/marsqing/Documents/textfile.txt");
     	List<String> lines = null;
     	
     	try {
