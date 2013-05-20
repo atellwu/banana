@@ -1,7 +1,8 @@
 package com.dianping.spotlight.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +41,6 @@ public class RecommendServiceImpl implements RecommendService {
         RecommendResult result = new RecommendResult();
         String appName = "";
         List<HotkeyRes> hotkeyRess = new ArrayList<HotkeyRes>();
-        result.setAppName(appName);
         result.setRecommendKeys(hotkeyRess);
         int hotkeyUsedTimes = 0;
         int operateTimes = lines.size();
@@ -53,21 +54,24 @@ public class RecommendServiceImpl implements RecommendService {
                 } else if (startIndex == -1) {
                     appName = line.substring(APP_PREFIX.length() + 1).trim();
                 } else {
-                    appName = line.substring(startIndex, line.length());
+                    appName = line.substring(startIndex+1, line.length());
                 }
                 if (!appName.isEmpty()) {
                     break;
                 }
             }
         }
-        if (!appName.isEmpty()) {
+        if (appName.isEmpty()) {
+        	System.out.println("app name is empty");
             return null;
         }
 
         Set<Hotkey> hotkeys = statisticsService.listHotkeys(appName);
         if (hotkeys == null || hotkeys.size() == 0) {
+        	System.out.println("hotkeys is null");
+
             return null;
-        } else if (hotkeys.size() > MAX_HOTKEY_SIZE) { //���20����ݼ�
+        } else if (hotkeys.size() > MAX_HOTKEY_SIZE) { //锟斤拷锟�0锟斤拷锟斤拷菁锟�
             List<Hotkey> hotkeyList = new ArrayList<Hotkey>(hotkeys);
             Collections.sort(hotkeyList, new HotkeyCompartor());
             hotkeys = new HashSet<Hotkey>();
@@ -96,7 +100,7 @@ public class RecommendServiceImpl implements RecommendService {
                 hotkeyRes.setHotkey(hotkeyToHotKeyMap.get(hotkeyUsed));
                 hotkeyRes.setUsed(true);
                 hotkeyRess.add(hotkeyRes);
-                hotkeyToHotKeyMap.remove(tokens);
+                hotkeyToHotKeyMap.remove(hotkeyUsed);
             }
             if (hotkeys.contains(hotkeyUsed)) {
                 hotkeyUsedTimes++;
@@ -112,20 +116,22 @@ public class RecommendServiceImpl implements RecommendService {
             }
         }
 
-        int score = hotkeyUsedScore(hotkeys, hotkeyToHotKeyMap.values(), 50);
+        int score = hotkeyUsedScore(hotkeys.size(), hotkeyToHotKeyMap.keySet().size(), 50);
         score = score + hotkeyPercentScore(hotkeyUsedTimes * 1.0 / operateTimes, 50, appName);
         result.setScore(score);
         result.setHigherThan(statisticsService.record(appName, hotkeys, score));
+        result.setAppName(appName);
         return result;
     }
 
-    private int hotkeyUsedScore(Collection<Hotkey> all, Collection<Hotkey> notused, int totalScore) {
-        return totalScore * (all.size() - notused.size()) / all.size();
+    private int hotkeyUsedScore(int all, int notused, int totalScore) 
+    {
+        return (int) 1.0 * totalScore * (all - notused) / all;
     }
 
     private int hotkeyPercentScore(double percent, int totalScore, String appName) {
         double usageHigherThan = statisticsService.usageHigherThan(appName, percent);
-        return (int) (totalScore * (1 - usageHigherThan));
+        return (int) (totalScore * usageHigherThan);
     }
 
     class HotkeyResCompartor implements Comparator<HotkeyRes> {
@@ -140,7 +146,6 @@ public class RecommendServiceImpl implements RecommendService {
     class HotkeyCompartor implements Comparator<Hotkey> {
         @Override
         public int compare(Hotkey o1, Hotkey o2) {
-            //usage�������ǰ��
             return new Double(o2.getUsage()).compareTo(o1.getUsage());
         }
 
@@ -154,6 +159,27 @@ public class RecommendServiceImpl implements RecommendService {
         Store store = new DefaultStore();
         store.init();
         statisticsService.setStore(store);
+    }
+    
+    public static void main(String []args) {
+    	RecommendService service = new RecommendServiceImpl();
+    	service.init();
+    	File file = new File("/data/appdatas/banana/sample.txt");
+    	List<String> lines = null;
+    	
+    	try {
+    		lines= FileUtils.readLines(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	System.out.println(service.recommend(lines));
+    	try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	System.exit(0);
     }
 
 }
