@@ -1,25 +1,36 @@
-<section>
-	<h2 align="center">快到框里来！</h2>
+<div class="containter navbar  navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="#">烦躁的香蕉</a>
+		</div>
+	</div>
+</div>
+<div class="container" style="margin-top: 60px">
+	<div class="row">
+		<h2 align="center">快到框里来！</h2>
 
-	<article>
-		<div id="holder"></div>
-		<p id="upload" class="hidden">
-			<label>Drag &amp; drop not supported, but you can still
-				upload via this input field:<br> <input type="file">
-			</label>
-		</p>
-		<p id="filereader" class="hidden">File API &amp; FileReader API
-			not supported</p>
-		<p id="formdata" class="hidden">XHR2's FormData is not supported</p>
-		<p id="progress" class="hidden">XHR2's upload progress isn't
-			supported</p>
-		<p class="progress">
-			<progress class="bar" id="uploadprogress" min="0" max="100" value="0"
-				style="width: 0%">0</progress>
-		</p>
+		<article>
+			<div id="holder"></div>
+			<p id="upload" class="hidden">
+				<label>Drag &amp; drop not supported, but you can still
+					upload via this input field:<br> <input type="file">
+				</label>
+			</p>
+			<p id="filereader" class="hidden">File API &amp; FileReader API
+				not supported</p>
+			<p id="formdata" class="hidden">XHR2's FormData is not supported</p>
+			<p id="progress" class="hidden">XHR2's upload progress isn't
+				supported</p>
+			<p class="progress">
+				<progress class="bar" id="uploadprogress" min="0" max="100"
+					value="0" style="width: 0%">0</progress>
+			</p>
 
-	</article>
-	<script>
+		</article>
+
+	</div>
+</div>
+<script>
 		var holder = document.getElementById('holder'), tests = {
 			filereader : typeof FileReader != 'undefined',
 			dnd : 'draggable' in document.createElement('span'),
@@ -126,4 +137,3 @@
 			};
 		}
 	</script>
-</section>
