@@ -14,8 +14,8 @@
                   var tokens_${velocityCount} = $gson.toJson($recommendKey.hotkey.tokens);
                   var video_${velocityCount} = "$recommendKey.hotkey.videoUrl";
              </script>
-               <tr style="cursor: pointer;" onclick="clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"
-                  #if($recommendKey.used) style="color:green" #end>
+               <tr style="cursor: pointer;#if($recommendKey.used) background-color:#3ADF00 #end" onclick="clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"
+                  >
                   <td>$recommendKey.hotkey.name</td>
                   <td>$string.format("%.0f%%",$recommendKey.hotkey.usage)</td>
                </tr>
