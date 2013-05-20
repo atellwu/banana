@@ -1,5 +1,8 @@
 <div class="container" style="margin: 0 auto; width: 100%; margin-bottom: 50px; height: 650px;">
    <div id="main" role="main" style="width: 950px; margin: 0 auto;">
+      <video width="320" height="240" controls>
+         <source id="videoDiv" src="" type="video/mp4">
+      </video>
       <ol id="keyboard" class="macbook-pro">
          <li><span>~</span>`</li>
          <li><span>!</span>1</li>
@@ -55,7 +58,7 @@
          <li><span>?</span>/</li>
          <li class="special shift r">shift</li>
          <li class="special tall l">fn</li>
-         <li class="special tall less-padding l">control</li>
+         <li class="special tall less-padding l"><span style="display: none">l_control</span>control</li>
          <li class="special tall less-padding l"><span>alt</span>option</li>
          <li class="special tall command r"><span style="display: none">command left</span><span>&#8984;</span>command</li>
          <li class="special tall" id="space"></li>
@@ -75,15 +78,16 @@
 						display(ele);
 					});
 				};
-				function playVideo(videoUrl) {
-					console.log(videoUrl);
+				function playVideo(videoName) {
+					var videoUrl = '${rc.contextPath}/public/videos/'
+							+ videoName + '.mp4';
+					$('#videoDiv').attr('src', videoUrl);
 				};
 				function display(ch) {
-					console.log('display ' + ch);
 					if (ch.length == 1) {
 						ch = ch.toUpperCase();
 					}
-					var someChar = $("li:contains('" + ch + "')");
+					var someChar = $("ol#keyboard > li:contains('" + ch + "')");
 					if (someChar && someChar.length > 0) {
 						someChar.css('background-color', '#848484');
 						var topp = someChar.offset().top - 7;
@@ -93,6 +97,9 @@
 						var cc = $("<div class='cc' style='z-index: 9999; position: absolute; font-size: 100%; opacity: 0'></div>");
 						if (ch == 'command right' || ch == 'command left') {
 							ch = 'command';
+						}
+						if (ch == 'l_control') {
+							ch = 'control';
 						}
 						cc.text(ch);
 						cc.css('top', topp);

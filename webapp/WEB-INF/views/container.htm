@@ -12,7 +12,7 @@
          var tokens_${velocityCount} = $gson.toJson($recommendKey.hotkey.tokens);
          var video_${velocityCount} = "$recommendKey.hotkey.videoUrl";
 									</script>
-         <li class="$!{indexActive}"><a href="javascript:clickHotkey(tokens_${velocityCount});playVideo(video_${velocityCount});"><i class="icon-fire"></i>
+         <li class="$!{indexActive}"><a href="javascript:clickHotkey(tokens_${velocityCount});playVideo('$recommendKey.hotkey.name');"><i class="icon-fire"></i>
                $recommendKey.hotkey.name <span style="margin-left:0px; #if($recommendKey.used) color:green #end">$string.format("%.0f%%",$recommendKey.hotkey.usage)</span></a> </li> #end
       </ul>
    </div>
