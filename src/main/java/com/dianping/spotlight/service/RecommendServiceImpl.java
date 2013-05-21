@@ -92,8 +92,8 @@ public class RecommendServiceImpl implements RecommendService {
             for (String token : line.split(" ")) {
                 tokens.add(token);
             }
-            Hotkey hotkeyUsed = new Hotkey();
-            hotkeyUsed.setTokens(tokens);
+            Hotkey hotkeyUsed = new Hotkey(); //当前扫描到的击键组合
+            hotkeyUsed.setTokens(tokens); 
             if (hotkeyToHotKeyMap.containsKey(hotkeyUsed)) {
                 HotkeyRes hotkeyRes = new HotkeyRes();
                 hotkeyRes.setHotkey(hotkeyToHotKeyMap.get(hotkeyUsed));
@@ -131,7 +131,7 @@ public class RecommendServiceImpl implements RecommendService {
 
     private int hotkeyPercentScore(double percent, int totalScore, String appName) {
         double usageHigherThan = statisticsService.usageHigherThan(appName, percent);
-        return (int) (totalScore * usageHigherThan);
+        return (int) (totalScore * usageHigherThan/100);
     }
 
     class HotkeyResCompartor implements Comparator<HotkeyRes> {
@@ -165,6 +165,7 @@ public class RecommendServiceImpl implements RecommendService {
     	RecommendService service = new RecommendServiceImpl();
     	service.init();
     	File file = new File("/Users/marsqing/Documents/textfile.txt");
+
     	List<String> lines = null;
     	
     	try {
