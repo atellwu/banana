@@ -66,28 +66,25 @@ public class RecommendServiceImpl implements RecommendService {
             return null;
         }
 
-        Set<Hotkey> hotkeys = statisticsService.listHotkeys(appName);
+        Set<Hotkey> hotkeys = statisticsService.listHotkeys(appName); //所有的快捷键
         if (hotkeys == null || hotkeys.size() == 0) {
         	System.out.println("hotkeys is null");
-
             return null;
-        } else if (hotkeys.size() > MAX_HOTKEY_SIZE) { //锟斤拷锟�0锟斤拷锟斤拷菁锟�
+        } else if (hotkeys.size() > MAX_HOTKEY_SIZE) { //取一定数量的快捷键
             List<Hotkey> hotkeyList = new ArrayList<Hotkey>(hotkeys);
             Collections.sort(hotkeyList, new HotkeyCompartor());
             hotkeys = new HashSet<Hotkey>();
             for (int i = 0; i < MAX_HOTKEY_SIZE; i++) {
                 hotkeys.add(hotkeyList.get(i));
-
             }
         }
 
-        Map<Hotkey, Hotkey> hotkeyToHotKeyMap = new HashMap<Hotkey, Hotkey>();
-        //		Set<Hotkey> HotkeyUsed =  new HashSet<Hotkey>();
-        //		Map<Set<String>,Integer> tokensToNumMap = new HashMap<Set<String>,Integer>();
+        Map<Hotkey, Hotkey> hotkeyToHotKeyMap = new HashMap<Hotkey, Hotkey>(); //快捷键的map
         for (Hotkey hotkey : hotkeys) {
             hotkeyToHotKeyMap.put(hotkey, hotkey);
         }
-        Set<Hotkey> hotkeysUsed = new HashSet<Hotkey>();
+        
+        Set<Hotkey> hotkeysUsed = new HashSet<Hotkey>(); //使用过的快捷键
 
         for (String line : lines) {
             line = line.trim().toLowerCase();
@@ -97,13 +94,12 @@ public class RecommendServiceImpl implements RecommendService {
             }
             Hotkey hotkeyUsed = new Hotkey();
             hotkeyUsed.setTokens(tokens);
-            if (hotkeys.contains(hotkeyUsed)) {
+            if (hotkeyToHotKeyMap.containsKey(hotkeyUsed)) {
                 HotkeyRes hotkeyRes = new HotkeyRes();
                 hotkeyRes.setHotkey(hotkeyToHotKeyMap.get(hotkeyUsed));
                 hotkeyRes.setUsed(true);
                 hotkeyRess.add(hotkeyRes);
-                hotkeysUsed.add( hotkeyToHotKeyMap.remove(hotkeyUsed));
-                
+                hotkeysUsed.add( hotkeyToHotKeyMap.remove(hotkeyUsed));              
             }
             if (hotkeys.contains(hotkeyUsed)) {
                 hotkeyUsedTimes++;
